@@ -1,0 +1,453 @@
+#!/bin/bash
+#----------------------------------------------------------------------------
+# KNOWN PROBLEMS:  none
+# NOTEs:           none
+# OPEN POINTS:     Should all be removed in the final version, anyway they have been
+#                  marked with: _???_<YYMMDD>  (search/grep for _???_)
+#----------------------------------------------------------------------------
+#
+# 14/04/04  v0.01  by Schaefers,Michael start
+# 14/04/23  v1.00  by Schaefers,Michael 1st release
+# 14/05/21  v1.10  by Schaefers,Michael adapted for any project/folder
+# 14/10/21  v1.11  by Schaefers,Michael probably last "old" state
+# 14/??/??  v?.??  ~~~~~~~~~~~~~~~~~~~~~vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+# 14/12/23  v2.00  by Schaefers,Michael since original got lost with stolen laptop
+# 15/04/03  v2.11  by Schaefers,Michael echo version & other stuff
+# 15/04/16  v2.12  by Schaefers,Michael show untracked&ignored files -> "git status -u --ignored"
+# 15/10/20  v2.13  by Schaefers,Michael adding simple version check
+# 15/10/22  v2.14  by Schaefers,Michael marking added for other users to show areas where adaptations might be required
+# 15/11/08  v2.15  by Schaefers,Michael adaptions as result of "script location moved"
+#
+# status : still under (never ending) development
+
+tmpCoreCheckInBashVersion="v2.15 151108"
+
+
+
+
+
+###
+### do neccessry script adaptations here
+###
+###vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+
+# declare expected script version      HERE
+#                                       |
+#                       VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+tmpLocalExpectedVersion=`cat /c/X/GIT/CHECKIN_SCRIPT_VERSION_CONTROL/check-in_core_script_version.txt`
+#                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#                                       |
+#                                      HERE
+
+###^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+###
+###
+
+
+
+
+
+# identify script itself
+#~~~~~~~~~~~~~~~~~~~~~~~
+echo ${0##*/} ${tmpCoreCheckInBashVersion}
+#
+if [ "${tmpLocalExpectedVersion}"  !=  "${tmpCoreCheckInBashVersion}" ] ; then
+    echo -e "\e[01;31mcheck version: \"${tmpLocalExpectedVersion}\" was expected for core check-in script.\e[00m"
+    #    ^^! ---red---....................................................................................normal
+    exit -1
+fi
+
+# identify bash
+#~~~~~~~~~~~~~~
+bash --version
+echo ""
+echo ""
+
+
+
+
+
+# do some checks if it makes sense to start script
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# check parameter count
+#~~~~~~~~~~~~~~~~~~~~~~~
+# 1: expected path
+# 2: name of development branch
+# 3: check-in message
+if [ ${#} -ne 3 ] ; then
+    echo -e "\e[01;31mERROR: false parameter count -> ${#}\e[00m"
+    #    ^^! ---red---....................................normal
+    exit -1
+fi
+
+
+tmpLocalExpectedPath="${1}"
+tmpLocalExpectedDevelopmentBranchName="${2}"
+checkInMessage="${3}"
+
+echo -e "\e[00;33mexpected place:    ${tmpLocalExpectedPath}\e[00m"
+#    ^^! --brown--..........................................normal
+
+echo -e "\e[00;33mexpected branch:   ${tmpLocalExpectedDevelopmentBranchName}\e[00m"
+#    ^^! --brown--...........................................................normal
+
+echo -e "\e[00;33mcommand :          check-in  ${checkInMessage}\e[00m"
+#    ^^! --brown--..............................................normal
+
+echo -e "\e[00;33mjust checking...\e[00m"
+#    ^^! --brown--................normal
+
+
+
+if [ "${PWD}" != "${tmpLocalExpectedPath}" ] ; then
+    echo -e "\e[01;31mERROR: NOT at expected place  (not at ${tmpLocalExpectedPath})\e[00m"
+    #    ^^! ---red---..............................................................normal
+    exit -1
+fi
+
+if [ ! -e .git ] ; then
+    echo -e "\e[01;31mERROR: check current path - there is NO .git\e[00m"
+    #    ^^! ---red---............................................normal
+    exit -1
+fi
+
+
+
+# check if on "development" branch
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+tmpLocalBranchName=$(git symbolic-ref -q HEAD)
+tmpLocalBranchName=${tmpLocalBranchName##refs/heads/}
+tmpLocalBranchName=${tmpLocalBranchName:-HEAD}
+if [ ${tmpLocalBranchName} != ${tmpLocalExpectedDevelopmentBranchName} ] ; then
+    echo -e "\e[01;31mERROR: you have to be on the dev branch - but you are NOT -> (${tmpLocalBranchName})\e[00m"
+    #    ^^! ---red---....................................................................................normal
+    exit -1
+fi
+
+if [ ${tmpLocalBranchName} == "master" ] ; then
+    echo -e "\e[01;31mERROR: you have to be on some development branch and NOT on the master branch\e[00m"
+    #    ^^! ---red---.............................................................................normal
+    exit -1
+fi
+
+
+echo -e "\e[01;32mOK, checks passed => start ACTION\e[00m"
+#    ^^! --green--.................................normal
+
+
+
+echo ""
+echo ""
+
+
+
+
+
+
+
+
+
+
+# act on DEV branch
+#~~~~~~~~~~~~~~~~~~
+
+            echo -e "\e[01;34mgit remote -v\e[00m"
+            #    ^^! ---blue--.............normal
+git  remote -v    ;  success=$?
+#=============
+            if [ ${success} -ne 0 ] ; then
+                # problems have occurred
+                echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
+                #    ^^! ---red---.....................................normal
+                #
+                # (re)act wise and clever - but how?
+                echo -e "\e[01;33m(re)act wise and clever\e[00m"
+                #    ^^! --yellow-.......................normal
+                exit -1
+            fi
+            echo ""
+            echo ""
+
+
+            echo -e "\e[01;34mgit status -u --ignored\e[00m"
+            #    ^^! ---blue--.......................normal
+git  status -u --ignored    ;  success=$?
+#=======================
+            if [ ${success} -ne 0 ] ; then
+                # problems have occurred
+                echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
+                #    ^^! ---red---.....................................normal
+                #
+                # (re)act wise and clever - but how?
+                echo -e "\e[01;33m(re)act wise and clever\e[00m"
+                #    ^^! --yellow-.......................normal
+                exit -1
+            fi
+            echo ""
+            echo ""
+
+
+            echo -e "\e[01;34mgit add -A    resp.  git add --all\e[00m"
+            #    ^^! ---blue--..................................normal
+git  add  -A    ;  success=$?
+#===========
+            if [ ${success} -ne 0 ] ; then
+                # problems have occurred
+                echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
+                #    ^^! ---red---.....................................normal
+                #
+                # (re)act wise and clever - but how?
+                echo -e "\e[01;33m(re)act wise and clever\e[00m"
+                #    ^^! --yellow-.......................normal
+                exit -1
+            fi
+            echo ""
+            echo ""
+
+
+            echo -e "\e[01;34mgit commit -m \"${checkInMessage}\"\e[00m"
+            #    ^^! ---blue--...................................normal
+git  commit  -m "${checkInMessage}"    ;  success=$?
+#==================================
+            case ${success} in
+                0)
+                    # OK -> NO (re)actions required
+                    ;;
+                1)
+                    echo -e "\e[00;33mreceived return code : ${success}\e[00m"
+                    echo -e "\e[00;33mEXPECTING reason was : \"nothing to commit, working directory clean\"\e[00m"
+                    echo -e "\e[00;33mCONTINUING(!)\e[00m"
+                    # NO(!) exit                                            _???_<150403>
+                    ;;
+                *)
+                    # problems have occurred
+                    echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
+                    #    ^^! ---red---.....................................normal
+                    #
+                    # (re)act wise and clever - but how?
+                    echo -e "\e[01;33m(re)act wise and clever\e[00m"
+                    #    ^^! --yellow-.......................normal
+                    exit -1
+                    ;;
+            esac
+            echo ""
+            echo ""
+
+
+
+
+
+# act on MASTER branch
+#~~~~~~~~~~~~~~~~~~~~~
+
+            echo -e "\e[01;34mgit checkout master\e[00m"
+            #    ^^! ---blue--...................normal
+git  checkout  master    ;  success=$?
+#====================
+            if [ ${success} -ne 0 ] ; then
+                # problems have occurred
+                echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
+                #    ^^! ---red---.....................................normal
+                #
+                # (re)act wise and clever - but how?
+                echo -e "\e[01;33m(re)act wise and clever\e[00m"
+                #    ^^! --yellow-.......................normal
+                exit -1
+            fi
+            echo ""
+            echo ""
+
+
+            echo -e "\e[01;34mgit pull --tags origin master\e[00m"
+            #    ^^! ---blue--......................normal
+git  pull  --tags  origin  master    ;  success=$?
+#================================
+            if [ ${success} -ne 0 ] ; then
+                # problems have occurred
+                echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
+                #    ^^! ---red---.....................................normal
+                #
+                # (re)act wise and clever - but how?
+                echo -e "\e[01;33m(re)act wise and clever\e[00m"
+                #    ^^! --yellow-.......................normal
+                exit -1
+            fi
+            echo ""
+            echo ""
+
+
+            echo -e "\e[01;34mgit merge ${tmpLocalExpectedDevelopmentBranchName}  -m \"${checkInMessage} ;  (auto-)merged\"\e[00m"
+            #    ^^! ---blue--.............................................................................................normal
+git  merge  ${tmpLocalExpectedDevelopmentBranchName}  -m "${checkInMessage} ;  (auto-)merged"    ;  success=$?
+#============================================================================================
+            if [ ${success} -ne 0 ] ; then
+                # problems have occurred
+                echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
+                #    ^^! ---red---.....................................normal
+                #
+                echo -e "\e[01;31mstopping execution of script\e[00m"
+                echo -e "\e[01;36mresolve conflicts and afterwards do:\e[00m"
+                echo -e "\e[01;33mgit add\e[00m \e[01;36m<resolved conflicts>"
+                echo -e "\e[01;33mgit commit -m \"${checkInMessage} ;  merged\"\e[00m"
+                echo -e "\e[01;33mgit push --tags -u origin master\e[00m"
+                echo -e "\e[01;33mgit checkout ${tmpLocalExpectedDevelopmentBranchName}\e[00m"
+                echo -e "\e[01;33mgit merge master\e[00m"
+                exit -1
+            fi
+            echo ""
+            echo ""
+
+
+            echo -e "\e[01;34mgit add -A    resp.  git add --all\e[00m"
+            #    ^^! ---blue--..................................normal
+git  add  -A    ;  success=$?
+#===========
+            if [ ${success} -ne 0 ] ; then
+                # problems have occurred
+                echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
+                #    ^^! ---red---.....................................normal
+                #
+                # (re)act wise and clever - but how?
+                echo -e "\e[01;33m(re)act wise and clever\e[00m"
+                #    ^^! --yellow-.......................normal
+                exit -1
+            fi
+            echo ""
+            echo ""
+
+
+            echo -e "\e[01;34mgit commit -m \"${checkInMessage} ;  merged\"\e[00m"
+            #    ^^! ---blue--.............................................normal
+git  commit  -m "${checkInMessage} ;  merged"    ;  success=$?
+#============================================
+            case ${success} in
+                0)
+                    # OK -> NO (re)actions required
+                    ;;
+                1)
+                    echo -e "\e[00;33mreceived return code : ${success}\e[00m"
+                    echo -e "\e[00;33mEXPECTING reason was : \"nothing to commit, working directory clean\"\e[00m"
+                    echo -e "\e[00;33mCONTINUING(!)\e[00m"
+                    # NO(!) exit                                            _???_<150403> what results in return code 1 ???
+                    ;;
+                *)
+                    # problems have occurred
+                    echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
+                    #    ^^! ---red---.....................................normal
+                    #
+                    # (re)act wise and clever - but how?
+                    echo -e "\e[01;33m(re)act wise and clever\e[00m"
+                    #    ^^! --yellow-.......................normal
+                    exit -1
+                    ;;
+            esac
+            echo ""
+            echo ""
+
+
+            echo -e "\e[01;34mgit push --tags -u origin master\e[00m"
+            #    ^^! ---blue--..........................normal
+git  push  --tags  -u  origin  master    ;  success=$?
+#====================================
+            if [ ${success} -ne 0 ] ; then
+                # problems have occurred
+                echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
+                #    ^^! ---red---.....................................normal
+                #
+                # (re)act wise and clever - but how?
+                echo -e "\e[01;33m(re)act wise and clever\e[00m"
+                #    ^^! --yellow-.......................normal
+                exit -1
+            fi
+            echo ""
+            echo ""
+
+
+
+
+
+# act on "development" branch
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+            echo -e "\e[01;34mgit checkout ${tmpLocalExpectedDevelopmentBranchName}\e[00m"
+            #    ^^! ---blue--................normal
+git  checkout  ${tmpLocalExpectedDevelopmentBranchName}    ;  success=$?
+#======================================================
+            if [ ${success} -ne 0 ] ; then
+                # problems have occurred
+                echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
+                #    ^^! ---red---.....................................normal
+                #
+                # (re)act wise and clever - but how?
+                echo -e "\e[01;33m(re)act wise and clever\e[00m"
+                #    ^^! --yellow-.......................normal
+                exit -1
+            fi
+            echo ""
+            echo ""
+
+
+            echo -e "\e[01;34mgit merge master\e[00m"
+            #    ^^! ---blue--................normal
+git  merge  master    ;  success=$?
+#=================
+            if [ ${success} -ne 0 ] ; then
+                # problems have occurred
+                echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
+                #    ^^! ---red---.....................................normal
+                #
+                # (re)act wise and clever - but how?
+                #
+                echo -e "\e[01;33m(re)act wise and clever\e[00m"
+                #    ^^! --yellow-.......................normal
+                exit -1
+            fi
+            echo ""
+            echo ""
+
+
+
+
+
+
+#======
+echo ""
+echo ""
+echo ""
+echo -e "\e[01;32mlooks like a successful run\e[00m  resp. END REACHED of ${0##*/} ${tmpCoreCheckInBashVersion}"
+#    ^^! --green--...........................normal............................................................
+exit 0
+
+###
+###  THE END
+###  =======
+###
+#############################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#############################################################################
+#############################################################################
+#############################################################################
+###
+###  TRASH
+###
+
