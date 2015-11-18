@@ -1,7 +1,7 @@
 
 public abstract interface Field {
     
-    public final double epsilon = 1e-12;
+    public static final double epsilon = 1e-12;
     
     
     
