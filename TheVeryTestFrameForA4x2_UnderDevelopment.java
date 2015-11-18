@@ -9,7 +9,7 @@ import org.junit.Test;
  * @author   Michael Schäfers ; P1@Hamburg-UAS.eu 
  * @version  2015/11/13
  */
-public class TestFrameJUnitForA4x2 {
+public class TheVeryTestFrameForA4x2_UnderDevelopment {
     
     /**
      * Testing A4x2
@@ -18,6 +18,7 @@ public class TestFrameJUnitForA4x2 {
         
         System.out.printf( "Nach [Rechts-Klick] auf Klasse nicht mit new ... ein Objekt erzeugen,\n" );
         System.out.printf( "sondern \"Test All\" starten.\n" );
+        System.out.printf( "Es kann etwas dauern (ca. 10s).\n" );
         System.out.printf( "Falls ein gruener Balken erscheint, was der Test erfolgreich.\n" );
         System.out.printf( "Falls ein roter Balken erscheint, sind Fehler aufgetreten.\n" );
         
@@ -32,8 +33,8 @@ public class TestFrameJUnitForA4x2 {
         
         // Cube
         permutate(
-            true,                   // cube expected
-            true,                   // cuboid expected
+            true,                   // cube expected ?
+            true,                   // cuboid expected ?
             new Point( +0.0,  +0.0,  +0.0),   new Point( +0.0,  +1.0,  +0.0),   new Point( +0.0,  +0.0,  +1.0),   new Point( +0.0,  +1.0,  +1.0),
             new Point( +1.0,  +0.0,  +0.0),   new Point( +1.0,  +1.0,  +0.0),   new Point( +1.0,  +0.0,  +1.0),   new Point( +1.0,  +1.0,  +1.0)
         );
@@ -41,8 +42,8 @@ public class TestFrameJUnitForA4x2 {
         
         // Cube                     (Test#1)
         permutate(
-            true,                   // cube expected
-            true,                   // cuboid expected
+            true,                   // cube expected ?
+            true,                   // cuboid expected ?
             new Point( +0.0,  +0.0,  +0.0),   new Point( +0.0,  +5.0,  +0.0),   new Point( +0.0,  +0.0,  +5.0),   new Point( +0.0,  +5.0,  +5.0),
             new Point( +5.0,  +0.0,  +0.0),   new Point( +5.0,  +5.0,  +0.0),   new Point( +5.0,  +0.0,  +5.0),   new Point( +5.0,  +5.0,  +5.0)
         );
@@ -50,17 +51,17 @@ public class TestFrameJUnitForA4x2 {
         
         // Cube
         permutate(
-            true,                   // cube expected
-            true,                   // cuboid expected
+            true,                   // cube expected ?
+            true,                   // cuboid expected ?
             new Point( +6.7,  +3.9,  +1.3),   new Point( -8.3,  +4.9,  +5.3),   new Point( -6.3,  -1.1, +14.3),   new Point( +2.7,  +4.9, +16.3),
             new Point( -0.3,  -8.1,  +8.3),   new Point( +0.7, +10.9,  +7.3),   new Point( -2.3,  -2.1,  -0.7),   new Point( +8.7,  -2.1, +10.3)
         );
         //  ( -2.3, -2.1, -0.7 )    "+"    (+9.0, +6.0, +2.0),  (+2.0, -6.0, +9.0),  (-6.0, +7.0, +6.0)
         
-        // Cube ?                   (Test#6)
+        // Cube (?)                 (Test#6)
         permutate(
-            true,                   // cube expected
-            true,                   // cuboid expected
+            true,                   // cube expected ?
+            true,                   // cuboid expected ?
             new Point( -8.3,  +4.9,  +5.3),   new Point( -2.3,  -2.1,  -0.7),   new Point( +0.7, +10.9,  +7.3),   new Point( +6.7,  +3.9,  +1.3),
             new Point( -6.3,  -1.1, +14.3),   new Point( -0.3,  -8.1,  +8.3),   new Point( +2.7,  +4.9, +16.3),   new Point( +8.7,  -2.1, +10.3)
         );
@@ -68,8 +69,8 @@ public class TestFrameJUnitForA4x2 {
         
         // Cube
         permutate(
-            true,                   // cube expected
-            true,                   // cuboid expected
+            true,                   // cube expected ?
+            true,                   // cuboid expected ?
             new Point( -1.3,  -2.3,  -4.7),   new Point( -0.3, -10.3,  -0.7),   new Point( +3.7,  -6.3,  +6.3),   new Point( -8.3,  -9.3,  +3.3),
             new Point( +2.7,  +1.7,  +2.3),   new Point( -9.3,  -1.3,  -0.7),   new Point( -5.3,  +2.7,  +6.3),   new Point( -4.3,  -5.3, +10.3)
         );
@@ -77,28 +78,28 @@ public class TestFrameJUnitForA4x2 {
         
         
         
-        // Cuboid ?                 (Test#3)
+        // Cuboid (?)               (Test#3)
         permutate(
-            false,                  // cube expected
-            true,                   // cuboid expected
+            false,                  // cube expected ?
+            true,                   // cuboid expected ?
             new Point( -2.0,  -3.0,  -5.0),   new Point( -2.0,  +3.0,  -5.0),   new Point( +2.0,  -3.0,  -5.0),   new Point( +2.0,  +3.0,  -5.0),
             new Point( -2.0,  -3.0,  +5.0),   new Point( -2.0,  +3.0,  +5.0),   new Point( +2.0,  -3.0,  +5.0),   new Point( +2.0,  +3.0,  +5.0)
         );
         // ...
         
-        // Cuboid ?
+        // Cuboid (?)
         permutate(
-            false,                  // cube expected
-            true,                   // cuboid expected
+            false,                  // cube expected ?
+            true,                   // cuboid expected ?
             new Point( -3.7,  -1.7,  -4.3),   new Point( -0.7, -25.7,  +7.7),   new Point(+19.3,  -5.7, +42.7),   new Point(-16.7, -23.7, +15.7),
             new Point(+16.3, +18.3, +30.7),   new Point(-19.7,  +0.3,  +3.7),   new Point( +0.3, +20.3, +38.7),   new Point(  3.3,  -3.7, +50.7)
         );
         // ...
         
-        // Cuboid ?
+        // Cuboid (?)
         permutate(
-            false,                  // cube expected
-            true,                   // cuboid expected
+            false,                  // cube expected ?
+            true,                   // cuboid expected ?
             new Point( -4.9,  +0.8,  -0.1),   new Point( -0.9,  -2.7,  -1.1),   new Point( +3.1,  +4.3,  -0.6),   new Point( -1.9,  -0.7,  -3.1),
             new Point( +4.1,  +2.3,  +1.4),   new Point( +0.1,  +5.8,  +2.4),   new Point( -3.9,  -1.2,  +1.9),   new Point( +1.1,  +3.8,  +4.4)
         );
@@ -106,10 +107,10 @@ public class TestFrameJUnitForA4x2 {
         
         
         
-        // nix ?                    (Test#2)
+        // nix (?)                  (Test#2)
         permutate(
-            false,                  // cube expected
-            false,                  // cuboid expected
+            false,                  // cube expected ?
+            false,                  // cuboid expected ?
             new Point( +0.0,  +0.0,  +0.0),   new Point( +0.0,  +3.0,  +4.0),   new Point( +5.0,  +0.0,  +0.0),   new Point( +5.0,  +3.0,  +4.0),
             new Point( +0.0,  +5.0,  +0.0),   new Point( +0.0,  +8.0,  +4.0),   new Point( +5.0,  +5.0,  +0.0),   new Point( +5.0,  +8.0,  +4.0)
         );
@@ -117,17 +118,17 @@ public class TestFrameJUnitForA4x2 {
         
         // nix                      (Test#4)
         permutate(
-            false,                  // cube expected
-            false,                  // cuboid expected
+            false,                  // cube expected ?
+            false,                  // cuboid expected ?
             new Point( -3.0,  +4.0,  +0.0),   new Point( +0.0,  +0.0,  +0.0),   new Point( +2.0,  +4.0,  +0.0),   new Point( +5.0,  +0.0,  +0.0),
             new Point( -3.0,  +4.0,  +5.0),   new Point( +0.0,  +0.0,  +5.0),   new Point( +2.0,  +4.0,  +5.0),   new Point( +5.0,  +0.0,  +5.0)
         );
         // KEIN Wuerfel und KEIN Quader, aber Kantenlaenge immer 5
         
-        // nix ?                    (Test#5)
+        // nix (?)                  (Test#5)
         permutate(
-            false,                  // cube expected
-            false,                  // cuboid expected
+            false,                  // cube expected ?
+            false,                  // cuboid expected ?
             new Point( -6.0,  +1.5,  +2.5),   new Point( +1.0,  +0.0,  +0.0),   new Point( +1.0,  +3.0,  +0.0),   new Point( +3.0,  +1.5,  +2.5),
             new Point( -1.0,  +1.5,  +2.5),   new Point( +1.0,  +0.0,  +5.0),   new Point( +1.0,  +3.0,  +5.0),   new Point( +8.0,  +1.5,  +2.5)
         );
