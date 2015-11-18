@@ -25,6 +25,11 @@ public class Cube extends Cuboid {
     
     
     @Override
+    public boolean isValid(){
+        return Cube.isValid( point );
+    }//method()
+    
+    @Override
     public String toString(){
         return String.format( "[<%s>: super=%s]",  Cube.class.getSimpleName(), super.toString() );
     }//method()

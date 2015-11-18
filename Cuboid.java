@@ -5,11 +5,12 @@ import java.util.Arrays;
 public class Cuboid implements Field {
     
     static public boolean isValid( final Point... point ){
-        return isValid( computeLineLength( point ) );
+        return Cuboid.isValid( computeLineLength( point ) );
     }//method()
     //
     // "isValid" is subfunction of "isValid" and requires sorted array as parameter
     static private boolean isValid( final double[] lineLength ){                // private on purpose
+        assert lineLength.length==28 : String.format( "invalid parameter - 28 line length were expected and %d received", lineLength.length );
         return ( lineLength[ 3]-lineLength[ 0] < epsilon )                      // "1.Kante"
             && ( lineLength[ 7]-lineLength[ 4] < epsilon )                      // "2.Kante"
             && ( lineLength[11]-lineLength[ 8] < epsilon )                      // "3.Kante" oder "1.Flächendiagonale"
@@ -20,7 +21,7 @@ public class Cuboid implements Field {
     }//method()
     //
     static protected double[] computeLineLength( final Point... point ){        // protected on purpose
-        assert point.length==8 : "invalid parameter - 8 points are expected";
+        assert point.length==8 : String.format( "invalid parameter - 8 points were expected and %d received", point.length );
         int i = 0;
         double[] lineLength = new double[28];
         for ( int j=point.length; --j>=0; ){
@@ -36,9 +37,9 @@ public class Cuboid implements Field {
     }//method()
     //
     static Point getCenter( final Point... point ){
-        double[] vec = { 0,0,0 };
+        double[] vec = { 0.0, 0.0, 0.0 };
         for ( int i=0; i<vec.length; i++ ){
-            for ( Point p : point ) vec[i] += p.dim[i];
+            for ( final Point p : point ) vec[i] += p.dim[i];
             vec[i] = vec[i]/8;
         }//for
         return new Point( vec );
@@ -55,15 +56,15 @@ public class Cuboid implements Field {
     
     
     public Cuboid( final Point... point ){
-        assert point.length == 8 : "invalid parameter - 8 points are expected";
+        assert point.length==8 : String.format( "invalid parameter - 8 points were expected and %d received", point.length );
         final double[] lineLength = computeLineLength( point );
-        assert isValid( lineLength ) : "invalid parameter/points - valid cuboid expected";
+        assert Cuboid.isValid( lineLength ) : "invalid parameter/points - valid cuboid expected";
         this.point = point;
         
         final double x = lineLength[0];
         final double y = lineLength[4];
         double z = lineLength[8];
-        if ( Math.abs( x*x+y*y - z*z ) < Field.epsilon ){                       // ist z Fl�chendiagonale (und NICHT 3.Kante) ? 
+        if ( Math.abs( x*x+y*y - z*z ) < Field.epsilon ){                       // ist z Flaechendiagonale (und NICHT 3.Kante) ? 
             z = lineLength[12];                                                 // "Die Alternative" ist dann die 3.Kante
         }//if
         
@@ -74,11 +75,15 @@ public class Cuboid implements Field {
     
     
     
+    public boolean isValid(){
+        return isValid( computeLineLength( point ) );
+    }//method()
+    
     @Override
     public Point getCenter(){
         double[] vec = { 0,0,0 };
         for ( int i=0; i<vec.length; i++ ){
-            for ( Point p : point ) vec[i] += p.dim[i];
+            for ( final Point p : point ) vec[i] += p.dim[i];
             vec[i] = vec[i]/8;
         }//for
         return new Point( vec );
@@ -106,7 +111,7 @@ public class Cuboid implements Field {
         for( int i=0; i<point.length; i++ ){
             if( point[i].dim.length != other.point[i].dim.length )  return false;
             for( int d=0; d<point[i].dim.length; d++ ){
-                double delta = point[i].dim[d] - other.point[i].dim[d];
+                final double delta = point[i].dim[d] - other.point[i].dim[d];
                 if( delta < -epsilon || epsilon < delta ) return false; // Vergleich der Attribute
             }//for
         }//for
