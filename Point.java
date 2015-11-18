@@ -16,6 +16,17 @@ public class Point {
     
     
     @Override
+    public String toString(){
+        return String.format( "[<%s>:(%.2f;%.2f;%.2f)]",  Point.class.getSimpleName(), dim[0], dim[1], dim[2] );
+    }//toString()
+    
+    
+    
+    
+    
+    // NICHT eingefordert !!! vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+    
+    @Override
     public boolean equals( final Object other ){
         return  this == other
             || (    other != null )
@@ -42,11 +53,5 @@ public class Point {
         result = prime * result + Arrays.hashCode(dim);
         return result;
     }//hashCode()
-    
-    
-    @Override
-    public String toString(){
-        return String.format( "[<%s>:(%.2f;%.2f;%.2f)]",  Point.class.getSimpleName(), dim[0], dim[1], dim[2] );
-    }//toString()
     
 }//Point

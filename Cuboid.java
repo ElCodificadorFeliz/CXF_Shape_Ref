@@ -3,6 +3,72 @@ import java.util.Arrays;
 
 
 public class Cuboid implements Field {
+
+    public final Point[] point;
+    
+    // edgeLength ist NICHT eingefordert, macht es aber angenehmer
+    // Studenten muessen "jetzt" nur privae und public beherrschen
+    protected double[] edgeLength;                                              // protected on purpose - needed in sub classes
+    
+    
+    
+    // Konstruktor liegt Annahme zugrund, dass Koerper statisch sind - sich also nicht ueber die Zeit verändern
+    public Cuboid( final Point... point ){
+        assert point.length==8 : String.format( "invalid parameter - 8 points were expected and %d received", point.length );
+        final double[] lineLength = computeLineLength( point );
+        assert Cuboid.isValid( lineLength ) : "invalid parameter/points - valid cuboid expected";
+        this.point = point;
+        
+        final double x = lineLength[0];
+        final double y = lineLength[4];
+        double z = lineLength[8];
+        if ( Math.abs( x*x+y*y - z*z ) < Field.epsilon ){                       // ist z Flaechendiagonale (und NICHT 3.Kante) ? 
+            z = lineLength[12];                                                 // "Die Alternative" ist dann die 3.Kante
+        }//if
+        
+        edgeLength = new double[]{ x,y,z };
+    }//constructor()
+    
+    
+    
+    @Override
+    public Point getCenter(){
+        double[] vec = { 0,0,0 };
+        for ( int i=0; i<vec.length; i++ ){
+            for ( final Point p : point ) vec[i] += p.dim[i];
+            vec[i] = vec[i]/8;
+        }//for
+        return new Point( vec );
+    }//method()
+    
+    @Override
+    public double getSurface(){
+        return 2*(edgeLength[0]*edgeLength[1] + edgeLength[0]*edgeLength[2] + edgeLength[1]*edgeLength[2] );
+    }//method()
+    
+    @Override
+    public double getVolume(){
+        return edgeLength[0]*edgeLength[1]*edgeLength[2];
+    }//method()
+        
+    
+    @Override
+    public String toString() {
+        return String.format(
+            "[<%s>: edgeLength=%s; point=%s]",
+            Cuboid.class.getSimpleName(),
+            Arrays.toString( edgeLength ),
+            Arrays.toString( point )
+         );
+    }//method()
+    
+    
+    
+    
+    
+    // Das folgende wird teilweise von mir genutzt
+    // Der zugehoerige Code muesste (wenn er genutzt wird) also "irgendwo" auftauchen
+    // NICHT eingefordert !!! vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
     
     static public boolean isValid( final Point... point ){
         return Cuboid.isValid( computeLineLength( point ) );
@@ -48,57 +114,9 @@ public class Cuboid implements Field {
     
     
     
-    
-    public final Point[] point;
-    protected double[] edgeLength;                                              // protected on purpose - needed in sub classes
-    
-    
-    
-    
-    public Cuboid( final Point... point ){
-        assert point.length==8 : String.format( "invalid parameter - 8 points were expected and %d received", point.length );
-        final double[] lineLength = computeLineLength( point );
-        assert Cuboid.isValid( lineLength ) : "invalid parameter/points - valid cuboid expected";
-        this.point = point;
-        
-        final double x = lineLength[0];
-        final double y = lineLength[4];
-        double z = lineLength[8];
-        if ( Math.abs( x*x+y*y - z*z ) < Field.epsilon ){                       // ist z Flaechendiagonale (und NICHT 3.Kante) ? 
-            z = lineLength[12];                                                 // "Die Alternative" ist dann die 3.Kante
-        }//if
-        
-        edgeLength = new double[]{ x,y,z };
-    }//constructor()
-    
-    
-    
-    
-    
     public boolean isValid(){
-        return isValid( computeLineLength( point ) );
+        return Cuboid.isValid( computeLineLength( point ) );
     }//method()
-    
-    @Override
-    public Point getCenter(){
-        double[] vec = { 0,0,0 };
-        for ( int i=0; i<vec.length; i++ ){
-            for ( final Point p : point ) vec[i] += p.dim[i];
-            vec[i] = vec[i]/8;
-        }//for
-        return new Point( vec );
-    }//method()
-    
-    @Override
-    public double getSurface(){
-        return 2*(edgeLength[0]*edgeLength[1] + edgeLength[0]*edgeLength[2] + edgeLength[1]*edgeLength[2] );
-    }//method()
-    
-    @Override
-    public double getVolume(){
-        return edgeLength[0]*edgeLength[1]*edgeLength[2];
-    }//method()
-    
     
     
     @Override
@@ -122,17 +140,6 @@ public class Cuboid implements Field {
     @Override
     public int hashCode() {
         return Arrays.hashCode( point );
-    }//method()
-    
-    
-    @Override
-    public String toString() {
-        return String.format(
-            "[<%s>: edgeLength=%s; point=%s]",
-            Cuboid.class.getSimpleName(),
-            Arrays.toString( edgeLength ),
-            Arrays.toString( point )
-         );
     }//method()
     
 }//Cuboid
