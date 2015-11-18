@@ -11,6 +11,7 @@ public class Cube extends Cuboid {
     @Override
     public String toString(){
         return String.format( "[<%s>: super=%s]",  Cube.class.getSimpleName(), super.toString() );
+      //return String.format( "[<Cube>: super=%s]", super.toString());          // ist dieses Semester auch ok bzw. KEIN Cube.class.getSimpleName() als "Schutz" vor Refactoring eingefordert
     }//method()
     
     

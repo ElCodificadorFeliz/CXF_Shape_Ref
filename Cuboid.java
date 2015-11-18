@@ -59,7 +59,8 @@ public class Cuboid implements Field {
             Cuboid.class.getSimpleName(),
             Arrays.toString( edgeLength ),
             Arrays.toString( point )
-         );
+        );
+      //return String.format( "[<Cuboid>: point=%s]", Arrays.toString(point));  // ist dieses Semester auch ok bzw. KEIN Cuboid.class.getSimpleName() als "Schutz" vor Refactoring eingefordert
     }//method()
     
     

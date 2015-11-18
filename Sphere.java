@@ -27,7 +27,7 @@ public class Sphere implements Field {
     @Override
     public String toString(){
         return String.format( "[<%s>: center=%s, radius=%f]",  Sphere.class.getSimpleName(), center, radius );
-      //return String.format( "[<Sphere>: center=%s, radius=%f]",  center, radius );    // ist dieses Semester auch ok
+      //return String.format( "[<Sphere>: center=%s, radius=%f]",  center, radius );    // ist dieses Semester auch ok bzw. KEIN Sphere.class.getSimpleName() als "Schutz" vor Refactoring eingefordert
     }//method()
     
     
