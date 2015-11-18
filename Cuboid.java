@@ -7,7 +7,7 @@ public class Cuboid implements Field {
     public final Point[] point;
     
     // edgeLength ist NICHT eingefordert, macht es aber angenehmer
-    // Studenten muessen "jetzt" nur privae und public beherrschen
+    // Studenten muessen "jetzt" nur private und public beherrschen
     protected double[] edgeLength;                                              // protected on purpose - needed in sub classes
     
     
@@ -15,7 +15,7 @@ public class Cuboid implements Field {
     // Konstruktor liegt Annahme zugrund, dass Koerper statisch sind - sich also nicht ueber die Zeit verändern
     public Cuboid( final Point... point ){
         assert point.length==8 : String.format( "invalid parameter - 8 points were expected and %d received", point.length );
-        final double[] lineLength = computeLineLength( point );
+        final double[] lineLength = Cuboid.computeLineLength( point );
         assert Cuboid.isValid( lineLength ) : "invalid parameter/points - valid cuboid expected";
         this.point = point;
         
@@ -100,15 +100,6 @@ public class Cuboid implements Field {
         }//for
         Arrays.sort( lineLength );
         return lineLength;
-    }//method()
-    //
-    static Point getCenter( final Point... point ){
-        double[] vec = { 0.0, 0.0, 0.0 };
-        for ( int i=0; i<vec.length; i++ ){
-            for ( final Point p : point ) vec[i] += p.dim[i];
-            vec[i] = vec[i]/8;
-        }//for
-        return new Point( vec );
     }//method()
     
     

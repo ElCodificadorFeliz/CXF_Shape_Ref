@@ -1,5 +1,3 @@
- 
-
 
 public class Cube extends Cuboid {
     
@@ -19,8 +17,6 @@ public class Cube extends Cuboid {
     
     
     
-    // Das folgende wird teilweise von mir genutzt
-    // Der zugehoerige Code muesste (wenn er genutzt wird) also "irgendwo" auftauchen
     // NICHT eingefordert !!! vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
     
     static public boolean isValid( final Point... point ){

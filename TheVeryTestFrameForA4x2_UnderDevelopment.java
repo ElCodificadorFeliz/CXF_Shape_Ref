@@ -12,7 +12,7 @@ import org.junit.Test;
 public class TheVeryTestFrameForA4x2_UnderDevelopment {
     
     /**
-     * Testing A4x2
+     * Note that this is JUnit Test
      */
     public void doTest(){
         
