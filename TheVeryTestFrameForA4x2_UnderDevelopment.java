@@ -134,6 +134,15 @@ public class TheVeryTestFrameForA4x2_UnderDevelopment {
         );
         // ...
         
+        // nix (?)
+        permutate(
+            false,                  // cube expected ?
+            false,                  // cuboid expected ?
+            new Point( +1.0,  +1.0,  +0.0),   new Point( -1.0,  +1.0,  +0.0),   new Point( -1.0,  -1.0,  +1.0),   new Point( +1.0,  +1.0,  +1.0),
+            new Point( Math.sqrt(2), 0, 2),   new Point( 0, Math.sqrt(2), 2),   new Point(-Math.sqrt(2), 0, 2),   new Point( 0,-Math.sqrt(2), 2)
+        );
+        // ...
+        
     }//method()
     
     
