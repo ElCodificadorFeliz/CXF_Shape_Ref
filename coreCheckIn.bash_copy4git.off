@@ -17,10 +17,11 @@
 # 15/10/20  v2.13  by Schaefers,Michael adding simple version check
 # 15/10/22  v2.14  by Schaefers,Michael marking added for other users to show areas where adaptations might be required
 # 15/11/08  v2.15  by Schaefers,Michael adaptions as result of "script location moved"
+# 15/11/21  v2.16  by Schaefers,Michael "helping messages" in case of GIT errors improved
 #
 # status : still under (never ending) development
 
-tmpCoreCheckInBashVersion="v2.15 151108"
+tmpCoreCheckInBashVersion="v2.16 151121"
 
 
 
@@ -287,12 +288,16 @@ git  merge  ${tmpLocalExpectedDevelopmentBranchName}  -m "${checkInMessage} ;  (
                 #    ^^! ---red---.....................................normal
                 #
                 echo -e "\e[01;31mstopping execution of script\e[00m"
+                #    ^^! ---red---............................normal
                 echo -e "\e[01;36mresolve conflicts and afterwards do:\e[00m"
-                echo -e "\e[01;33mgit add\e[00m \e[01;36m<resolved conflicts>"
+                #    ^^! ---------....................................normal
+                #    vv! --yellow-..............---------....................normal
+                echo -e "\e[01;33mgit add\e[00m \e[01;36m<resolved conflicts>\e[00m"
                 echo -e "\e[01;33mgit commit -m \"${checkInMessage} ;  merged\"\e[00m"
                 echo -e "\e[01;33mgit push --tags -u origin master\e[00m"
                 echo -e "\e[01;33mgit checkout ${tmpLocalExpectedDevelopmentBranchName}\e[00m"
                 echo -e "\e[01;33mgit merge master\e[00m"
+                #    ^^! --yellow-................normal
                 exit -1
             fi
             echo ""
