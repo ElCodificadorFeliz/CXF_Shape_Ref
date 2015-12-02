@@ -38,6 +38,17 @@ Check-Liste
 
 
 
+ToDo:
+=====
+Als Test:
+Tetraeder mit gleich langen Kanten (d.h. Punkte doppelt) - wäre ungültige Eingabe - aber was passiert
+Quader und dann ein Oberfläche um 45° verdrehen - den Test gab es doch schon ???
+Quader und dann ein Oberfläche um 90° verdrehen
+
+
+
+
+
 History
 =======
 
