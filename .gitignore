@@ -10,20 +10,18 @@
 !package.bluej
 !/*.java
 #
-!/cards
-/cards/*
-!/cards/package.bluej
-!/cards/*.java
-
-
-
-# for safety's sake
-#==================
 #
 # exclude BlueJ/project specific stuff:
 **/*.class
 **/*.ctxt
 **/doc
+
+
+
+
+
+# for safety's sake
+#==================
 #
 # OS specific:
 # exclude annoying stuff: DOSe
