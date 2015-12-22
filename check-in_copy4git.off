@@ -24,8 +24,13 @@
 #                  marks added for other users to show areas where adaptations might be required
 # 15/11/08  v2.26  by Schaefers,Michael
 #                  marks added for other users to show areas where adaptations might be required
+# 15/12/21  v2.27  by Schaefers,Michael
+#                  improving comments
+# testing
+# 15/12/31  v2.30  by Schaefers,Michael
+#                  history cleanup 2015 ( removing notes for: v1.10/2.25/26/27 ) - "check-in" is considered as nearly final
 #
-tmpCheckInScriptVersion="v2.26 151108"
+tmpCheckInScriptVersion="v2.27 151221"
 #
 #----------------------------------------------------------------------------
 # PURPOSE (&usage)
@@ -214,7 +219,7 @@ exit 0
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 # git init
-# git remote add origin ssh://git@BitBucket.org/<BBuser>/...[.git]
+# git remote add origin git@BitBucket.org:<BBuser>/...[.git]
 # git add readme.md
 # git commit -m "initial check-in"
 # git push --tags -u origin master

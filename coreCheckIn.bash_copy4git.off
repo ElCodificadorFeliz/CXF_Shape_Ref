@@ -18,10 +18,15 @@
 # 15/10/22  v2.14  by Schaefers,Michael marking added for other users to show areas where adaptations might be required
 # 15/11/08  v2.15  by Schaefers,Michael adaptions as result of "script location moved"
 # 15/11/21  v2.16  by Schaefers,Michael "helping messages" in case of GIT errors improved
+# 15/12/14  v2.17  by Schaefers,Michael replacing "$?" by "${?}" and "success" by "returnCode" ;  improving error messages
+# 15/12/21  v2.18  by Schaefers,Michael improving error messages
+# 15/12/21  v2.19  by Schaefers,Michael improving comments
+# testing
+# 15/12/31  v2.20  by Schaefers,Michael history cleanup 2015 ( removing notes for: v2.11/12/13/14/15/16/17/18/19 ) - "coreCheckIn.bash" is considered as nearly final
 #
 # status : still under (never ending) development
 
-tmpCoreCheckInBashVersion="v2.16 151121"
+tmpCoreCheckInBashVersion="v2.19 151221"
 
 
 
@@ -121,8 +126,8 @@ tmpLocalBranchName=$(git symbolic-ref -q HEAD)
 tmpLocalBranchName=${tmpLocalBranchName##refs/heads/}
 tmpLocalBranchName=${tmpLocalBranchName:-HEAD}
 if [ ${tmpLocalBranchName} != ${tmpLocalExpectedDevelopmentBranchName} ] ; then
-    echo -e "\e[01;31mERROR: you have to be on the dev branch - but you are NOT -> (${tmpLocalBranchName})\e[00m"
-    #    ^^! ---red---....................................................................................normal
+    echo -e "\e[01;31mERROR: you have to be on the (right) development branch - but you are NOT -> branch: \"\e[01;33m${tmpLocalExpectedDevelopmentBranchName}\e[01;31m\" was expected\e[00m"
+    #    ^^! ---red---.......................................................................................--yellow-........................................---red---...............normal
     exit -1
 fi
 
@@ -155,12 +160,12 @@ echo ""
 
             echo -e "\e[01;34mgit remote -v\e[00m"
             #    ^^! ---blue--.............normal
-git  remote -v    ;  success=$?
+git  remote -v    ;  returnCode=${?}
 #=============
-            if [ ${success} -ne 0 ] ; then
+            if [ ${returnCode} -ne 0 ] ; then
                 # problems have occurred
-                echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
-                #    ^^! ---red---.....................................normal
+                echo -e "\e[01;31mPROBLEMs  ->  return code: ${returnCode}\e[00m"
+                #    ^^! ---red---........................................normal
                 #
                 # (re)act wise and clever - but how?
                 echo -e "\e[01;33m(re)act wise and clever\e[00m"
@@ -173,12 +178,12 @@ git  remote -v    ;  success=$?
 
             echo -e "\e[01;34mgit status -u --ignored\e[00m"
             #    ^^! ---blue--.......................normal
-git  status -u --ignored    ;  success=$?
+git  status -u --ignored    ;  returnCode=${?}
 #=======================
-            if [ ${success} -ne 0 ] ; then
+            if [ ${returnCode} -ne 0 ] ; then
                 # problems have occurred
-                echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
-                #    ^^! ---red---.....................................normal
+                echo -e "\e[01;31mPROBLEMs  ->  return code: ${returnCode}\e[00m"
+                #    ^^! ---red---........................................normal
                 #
                 # (re)act wise and clever - but how?
                 echo -e "\e[01;33m(re)act wise and clever\e[00m"
@@ -191,12 +196,12 @@ git  status -u --ignored    ;  success=$?
 
             echo -e "\e[01;34mgit add -A    resp.  git add --all\e[00m"
             #    ^^! ---blue--..................................normal
-git  add  -A    ;  success=$?
+git  add  -A    ;  returnCode=${?}
 #===========
-            if [ ${success} -ne 0 ] ; then
+            if [ ${returnCode} -ne 0 ] ; then
                 # problems have occurred
-                echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
-                #    ^^! ---red---.....................................normal
+                echo -e "\e[01;31mPROBLEMs  ->  return code: ${returnCode}\e[00m"
+                #    ^^! ---red---........................................normal
                 #
                 # (re)act wise and clever - but how?
                 echo -e "\e[01;33m(re)act wise and clever\e[00m"
@@ -209,22 +214,22 @@ git  add  -A    ;  success=$?
 
             echo -e "\e[01;34mgit commit -m \"${checkInMessage}\"\e[00m"
             #    ^^! ---blue--...................................normal
-git  commit  -m "${checkInMessage}"    ;  success=$?
+git  commit  -m "${checkInMessage}"    ;  returnCode=${?}
 #==================================
-            case ${success} in
+            case ${returnCode} in
                 0)
                     # OK -> NO (re)actions required
                     ;;
                 1)
-                    echo -e "\e[00;33mreceived return code : ${success}\e[00m"
+                    echo -e "\e[00;33mreceived return code : ${returnCode}\e[00m"
                     echo -e "\e[00;33mEXPECTING reason was : \"nothing to commit, working directory clean\"\e[00m"
                     echo -e "\e[00;33mCONTINUING(!)\e[00m"
                     # NO(!) exit                                            _???_<150403>
                     ;;
                 *)
                     # problems have occurred
-                    echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
-                    #    ^^! ---red---.....................................normal
+                    echo -e "\e[01;31mPROBLEMs  ->  return code: ${returnCode}\e[00m"
+                    #    ^^! ---red---........................................normal
                     #
                     # (re)act wise and clever - but how?
                     echo -e "\e[01;33m(re)act wise and clever\e[00m"
@@ -244,12 +249,12 @@ git  commit  -m "${checkInMessage}"    ;  success=$?
 
             echo -e "\e[01;34mgit checkout master\e[00m"
             #    ^^! ---blue--...................normal
-git  checkout  master    ;  success=$?
+git  checkout  master    ;  returnCode=${?}
 #====================
-            if [ ${success} -ne 0 ] ; then
+            if [ ${returnCode} -ne 0 ] ; then
                 # problems have occurred
-                echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
-                #    ^^! ---red---.....................................normal
+                echo -e "\e[01;31mPROBLEMs  ->  return code: ${returnCode}\e[00m"
+                #    ^^! ---red---........................................normal
                 #
                 # (re)act wise and clever - but how?
                 echo -e "\e[01;33m(re)act wise and clever\e[00m"
@@ -262,12 +267,12 @@ git  checkout  master    ;  success=$?
 
             echo -e "\e[01;34mgit pull --tags origin master\e[00m"
             #    ^^! ---blue--......................normal
-git  pull  --tags  origin  master    ;  success=$?
+git  pull  --tags  origin  master    ;  returnCode=${?}
 #================================
-            if [ ${success} -ne 0 ] ; then
+            if [ ${returnCode} -ne 0 ] ; then
                 # problems have occurred
-                echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
-                #    ^^! ---red---.....................................normal
+                echo -e "\e[01;31mPROBLEMs  ->  return code: ${returnCode}\e[00m"
+                #    ^^! ---red---........................................normal
                 #
                 # (re)act wise and clever - but how?
                 echo -e "\e[01;33m(re)act wise and clever\e[00m"
@@ -280,18 +285,18 @@ git  pull  --tags  origin  master    ;  success=$?
 
             echo -e "\e[01;34mgit merge ${tmpLocalExpectedDevelopmentBranchName}  -m \"${checkInMessage} ;  (auto-)merged\"\e[00m"
             #    ^^! ---blue--.............................................................................................normal
-git  merge  ${tmpLocalExpectedDevelopmentBranchName}  -m "${checkInMessage} ;  (auto-)merged"    ;  success=$?
+git  merge  ${tmpLocalExpectedDevelopmentBranchName}  -m "${checkInMessage} ;  (auto-)merged"    ;  returnCode=${?}
 #============================================================================================
-            if [ ${success} -ne 0 ] ; then
+            if [ ${returnCode} -ne 0 ] ; then
                 # problems have occurred
-                echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
-                #    ^^! ---red---.....................................normal
+                echo -e "\e[01;31mPROBLEMs  ->  return code: ${returnCode}\e[00m"
+                #    ^^! ---red---........................................normal
                 #
                 echo -e "\e[01;31mstopping execution of script\e[00m"
                 #    ^^! ---red---............................normal
                 echo -e "\e[01;36mresolve conflicts and afterwards do:\e[00m"
-                #    ^^! ---------....................................normal
-                #    vv! --yellow-..............---------....................normal
+                #    ^^! ---cyan--....................................normal
+                #    vv! --yellow-..............---cyan--....................normal
                 echo -e "\e[01;33mgit add\e[00m \e[01;36m<resolved conflicts>\e[00m"
                 echo -e "\e[01;33mgit commit -m \"${checkInMessage} ;  merged\"\e[00m"
                 echo -e "\e[01;33mgit push --tags -u origin master\e[00m"
@@ -306,12 +311,12 @@ git  merge  ${tmpLocalExpectedDevelopmentBranchName}  -m "${checkInMessage} ;  (
 
             echo -e "\e[01;34mgit add -A    resp.  git add --all\e[00m"
             #    ^^! ---blue--..................................normal
-git  add  -A    ;  success=$?
+git  add  -A    ;  returnCode=${?}
 #===========
-            if [ ${success} -ne 0 ] ; then
+            if [ ${returnCode} -ne 0 ] ; then
                 # problems have occurred
-                echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
-                #    ^^! ---red---.....................................normal
+                echo -e "\e[01;31mPROBLEMs  ->  return code: ${returnCode}\e[00m"
+                #    ^^! ---red---........................................normal
                 #
                 # (re)act wise and clever - but how?
                 echo -e "\e[01;33m(re)act wise and clever\e[00m"
@@ -324,22 +329,22 @@ git  add  -A    ;  success=$?
 
             echo -e "\e[01;34mgit commit -m \"${checkInMessage} ;  merged\"\e[00m"
             #    ^^! ---blue--.............................................normal
-git  commit  -m "${checkInMessage} ;  merged"    ;  success=$?
+git  commit  -m "${checkInMessage} ;  merged"    ;  returnCode=${?}
 #============================================
-            case ${success} in
+            case ${returnCode} in
                 0)
                     # OK -> NO (re)actions required
                     ;;
                 1)
-                    echo -e "\e[00;33mreceived return code : ${success}\e[00m"
+                    echo -e "\e[00;33mreceived return code : ${returnCode}\e[00m"
                     echo -e "\e[00;33mEXPECTING reason was : \"nothing to commit, working directory clean\"\e[00m"
                     echo -e "\e[00;33mCONTINUING(!)\e[00m"
                     # NO(!) exit                                            _???_<150403> what results in return code 1 ???
                     ;;
                 *)
                     # problems have occurred
-                    echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
-                    #    ^^! ---red---.....................................normal
+                    echo -e "\e[01;31mPROBLEMs  ->  return code: ${returnCode}\e[00m"
+                    #    ^^! ---red---........................................normal
                     #
                     # (re)act wise and clever - but how?
                     echo -e "\e[01;33m(re)act wise and clever\e[00m"
@@ -353,12 +358,12 @@ git  commit  -m "${checkInMessage} ;  merged"    ;  success=$?
 
             echo -e "\e[01;34mgit push --tags -u origin master\e[00m"
             #    ^^! ---blue--..........................normal
-git  push  --tags  -u  origin  master    ;  success=$?
+git  push  --tags  -u  origin  master    ;  returnCode=${?}
 #====================================
-            if [ ${success} -ne 0 ] ; then
+            if [ ${returnCode} -ne 0 ] ; then
                 # problems have occurred
-                echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
-                #    ^^! ---red---.....................................normal
+                echo -e "\e[01;31mPROBLEMs  ->  return code: ${returnCode}\e[00m"
+                #    ^^! ---red---........................................normal
                 #
                 # (re)act wise and clever - but how?
                 echo -e "\e[01;33m(re)act wise and clever\e[00m"
@@ -377,12 +382,12 @@ git  push  --tags  -u  origin  master    ;  success=$?
 
             echo -e "\e[01;34mgit checkout ${tmpLocalExpectedDevelopmentBranchName}\e[00m"
             #    ^^! ---blue--................normal
-git  checkout  ${tmpLocalExpectedDevelopmentBranchName}    ;  success=$?
+git  checkout  ${tmpLocalExpectedDevelopmentBranchName}    ;  returnCode=${?}
 #======================================================
-            if [ ${success} -ne 0 ] ; then
+            if [ ${returnCode} -ne 0 ] ; then
                 # problems have occurred
-                echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
-                #    ^^! ---red---.....................................normal
+                echo -e "\e[01;31mPROBLEMs  ->  return code: ${returnCode}\e[00m"
+                #    ^^! ---red---........................................normal
                 #
                 # (re)act wise and clever - but how?
                 echo -e "\e[01;33m(re)act wise and clever\e[00m"
@@ -395,12 +400,12 @@ git  checkout  ${tmpLocalExpectedDevelopmentBranchName}    ;  success=$?
 
             echo -e "\e[01;34mgit merge master\e[00m"
             #    ^^! ---blue--................normal
-git  merge  master    ;  success=$?
+git  merge  master    ;  returnCode=${?}
 #=================
-            if [ ${success} -ne 0 ] ; then
+            if [ ${returnCode} -ne 0 ] ; then
                 # problems have occurred
-                echo -e "\e[01;31mPROBLEMs  ->  return code: ${success}\e[00m"
-                #    ^^! ---red---.....................................normal
+                echo -e "\e[01;31mPROBLEMs  ->  return code: ${returnCode}\e[00m"
+                #    ^^! ---red---........................................normal
                 #
                 # (re)act wise and clever - but how?
                 #
