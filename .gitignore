@@ -25,11 +25,14 @@
 #
 # OS specific:
 # exclude annoying stuff: DOSe
+"System Volume Information"
 **/Thumbs.db
+**/*.swp
 # exclude annoying stuff: Mac OS X
 **/.DS_Store
 #
-# exclude the very check-in script, since problems might occur, if check-in script checks itself in
+# exclude the very synchronize script (respectively "check-in" script), since problems might occur, if synchronize script checks itself in (synchronize was named check-in before)
+synchronizeWithOriginMasterBranch.bash
 check-in
 
 
