@@ -1,13 +1,23 @@
 package shape;
 
 
+/**
+ * Cube - see task
+ * 
+ * @author   Michael Schaefers  ([UTF-8]:"Michael Schäfers");
+ *           P1@Hamburg-UAS.eu 
+ * @version  2022/05/17 (#1)
+ */
 public class Cube extends Cuboid {
     
     public Cube( final Point... point ){
         super( point );
         assert super.edgeLength[0]<=super.edgeLength[1] && super.edgeLength[1]<=super.edgeLength[2] : "internal bug in cuboid class - edgeLength is NOT ordered";
         assert super.edgeLength[2]-super.edgeLength[0]<Shape.epsilon : "invalid parameter/points - valid cube expected";
-    }//method()
+    }//constructor()
+    
+    
+    
     
     
     @Override
@@ -27,7 +37,7 @@ public class Cube extends Cuboid {
         return lineLength[11]-lineLength[ 0]<epsilon
             && lineLength[23]-lineLength[12]<epsilon
             && lineLength[27]-lineLength[24]<epsilon;
-    }//isValid()
+    }//method()
     
     
     

@@ -1,6 +1,13 @@
 package shape;
 
 
+/**
+ * Sphere - see task
+ * 
+ * @author   Michael Schaefers  ([UTF-8]:"Michael Schäfers");
+ *           P1@Hamburg-UAS.eu 
+ * @version  2022/05/17 (#1)
+ */
 public class Sphere implements Shape {
     
     private final Point center;
@@ -8,11 +15,15 @@ public class Sphere implements Shape {
     
     
     
+    
+    
     public Sphere( final Point center, final double radius ){
         assert radius >= 0 : "invalid parameter : positive radius expected";
         this.center = center;
         this.radius = radius;
-    }//Sphere
+    }//contructor()
+    
+    
     
     
     
@@ -66,4 +77,4 @@ public class Sphere implements Shape {
         return result;
     }//method()    
     
-}//Sphere
+}//class

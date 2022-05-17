@@ -4,6 +4,13 @@ package shape;
 import java.util.Arrays;
 
 
+/**
+ * Cuboid - see task
+ * 
+ * @author   Michael Schaefers  ([UTF-8]:"Michael Schäfers");
+ *           P1@Hamburg-UAS.eu 
+ * @version  2022/05/17 (#1)
+ */
 public class Cuboid implements Shape {
 
     public final Point[] point;
@@ -11,6 +18,8 @@ public class Cuboid implements Shape {
     // edgeLength ist NICHT eingefordert, macht es aber angenehmer
     // Studenten muessen "jetzt" nur private und public beherrschen
     protected double[] edgeLength;                                              // protected on purpose - needed in sub classes
+    
+    
     
     
     
@@ -30,6 +39,8 @@ public class Cuboid implements Shape {
         
         edgeLength = new double[]{ x,y,z };
     }//constructor()
+    
+    
     
     
     
@@ -136,4 +147,4 @@ public class Cuboid implements Shape {
         return Arrays.hashCode( point );
     }//method()
     
-}//Cuboid
+}//class

@@ -4,9 +4,18 @@ package shape;
 import java.util.Arrays;
 
 
+/**
+ * Point - see task
+ * 
+ * @author   Michael Schaefers  ([UTF-8]:"Michael Schäfers");
+ *           P1@Hamburg-UAS.eu 
+ * @version  2022/05/17 (#1)
+ */
 public class Point {
     
     final double[] dim;
+    
+    
     
     
     
@@ -14,6 +23,8 @@ public class Point {
         assert dim.length == 3 : "invalid parameter - 3 dimensions are expected";
         this.dim = dim;
     }//Point()
+    
+    
     
     
     
