@@ -19,6 +19,11 @@ public class Point {
     
     
     
+    /**
+     * TODO ...
+     * 
+     * @param dim  ...
+     */
     public Point( final double... dim ){
         assert dim.length == 3 : "invalid parameter - 3 dimensions are expected";
         this.dim = dim;
@@ -51,7 +56,7 @@ public class Point {
         return Arrays.equals( dim, other.dim );
     }//internalIsEqual()
     //
-    public boolean isEqual( final Point other, final double tolerance ){
+    public boolean isSimiliar( final Point other, final double tolerance ){
         return  getClass() == other.getClass()
             &&  Math.abs(dim[0]-other.dim[0])<Shape.epsilon
             &&  Math.abs(dim[1]-other.dim[1])<Shape.epsilon
