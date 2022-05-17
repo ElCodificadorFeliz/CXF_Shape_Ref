@@ -1,39 +1,83 @@
-# Unfortunately,
-#->     *                       # wont work part1 :'-(
-#->     !**/.java               # wont work part2 :'-(
-# is not working - you can NOT reinclude files in directories this way
-# hence: try to do something similiar to exclude everything and then reinclude *.java source afterwards
-/*
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+# Character encoding related QUICK-TEST-LINE: [Ä]=(Ae),[Ö]=(Oe),[Ü]=(Ue),[ä]=(ae),[ö]=(oe),[ü]=ue,[ß]=(szet)            |
+########################################################################################################################|<-121
+###                                                                                                                     V
+###
+###
+###
+###             .gitignore for Java using Eclipse
+###             #################################
+###
+###
+###############################################################################
+#
+#
+#   version :   2020/04/03              (based on 200403 - special variant for "cards")
+#   author :    Michael Schaefers       [UTF8]:  Michael Schäfers ;   Px@Hamburg-UAS.eu
+#
+###############################################################################
+
+
+
+
+###
+### exclude everything ("*") and re)include folders ("!*/") afterwards and this way prompt GIt to recursively (re)include (all wanted) files
+### the statement ("!*/") to (re)include all directory has not to be the first - it can also be everywhere, especially the last
+###
+*
+!*/
+
+
+
+###
+### (re)include wanted stuff (this is done recursively as result of "!*\")
+###=========================
+###
+#
+# (re)include explizit stuff (recursively as result of "!*\")
+
 !.gitignore
+
 !readme.md
 !ReadMe.txt
-!package.bluej
-!/*.java
+!*readme*.txt
+
+!*.java
+
+!ChunkPreamble.java.off
+!ClassPreamble.java.off
+!IdeasAndThoughtsRelatedToNextGenCards.txt
+
+
+
+
+
+###
+### exclude for safety's sake  -  NOT needed  if everything was excluded before  (as it was done ;-) )
+###==========================
+###
+
+# exclude OS specific stuff:
+#---------------------------
 #
-#
-# exclude BlueJ/project specific stuff:
-**/*.class
-**/*.ctxt
-**/doc
-
-
-
-
-
-# for safety's sake
-#==================
-#
-# OS specific:
 # exclude annoying stuff: DOSe
 "System Volume Information"
 **/Thumbs.db
 **/*.swp
+#
 # exclude annoying stuff: Mac OS X
 **/.DS_Store
-#
+
+# exclude BlueJ/project specific stuff:
+#--------------------------------------
+**/*.class
+**/*.ctxt
+**/doc
+**/package.bluej
+
+
 # exclude the very synchronize script (respectively "check-in" script), since problems might occur, if synchronize script checks itself in (synchronize was named check-in before)
 synchronizeWithOriginMasterBranch.bash
-check-in
 
 
 
@@ -43,6 +87,16 @@ check-in
 #
 # THE END  -  END OF SCRIPT
 #==========================
+#
+#
+# Remember, unfortunately
+#
+#->     *                       # wont work part1 :'-(
+#->     !**/wantedFile          # wont work part2 :'-(
+# is not working - you can NOT (re)include files in directories this way
+#
+# the workaround (see above) is working fine
+#
 #
 #
 #VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
