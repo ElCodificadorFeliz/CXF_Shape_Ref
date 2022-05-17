@@ -8,14 +8,30 @@ package shape;
  *           P1@Hamburg-UAS.eu 
  * @version  2022/05/17 (#1)
  */
-public abstract interface Shape {
+public interface Shape {                                                        // <=> abstract
     
-    public static final double epsilon = 1e-12;
+    /**
+     * TODO ...
+     */
+    double epsilon = 1e-12;                                                     // <=> public static final
     
     
     
-    public abstract Point getCenter();
-    public abstract double getSurface();
-    public abstract double getVolume();
+    
+    
+    /**
+     * TODO ...
+     */
+    Point getCenter();                                                          // <=> public abstract
+    
+    /**
+     * TODO ...
+     */
+    double getSurface();                                                        // <=> public abstract
+    
+    /**
+     * TODO ...
+     */
+    double getVolume();                                                         // <=> public abstract
     
 }//class
