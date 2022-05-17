@@ -3,7 +3,7 @@ package shape;
 
 
 /**
- * TestFrame for A4x2: ...
+ * TestFrame for  ...
  * 
  * @author   Michael Schäfers ; P1@Hamburg-UAS.eu 
  * @version  2015/11/13
@@ -11,9 +11,9 @@ package shape;
 public class TestFrame {
     
     /**
-     * Testing A4x2
+     * Testing ...
      */
-    public void doTest(){
+    public static void main( final String... unused ){
         
         System.out.printf( "Sphere\n" );
         Shape k1 = new Sphere( new Point(0,0,0), 1 );
@@ -280,7 +280,7 @@ public class TestFrame {
     
     
     
-    private void printIt( final Shape f, final String name ){
+    private static void printIt( final Shape f, final String name ){
         System.out.printf( "%s.volume  = %f\n",  name, f.getVolume() );
         System.out.printf( "%s.surface = %f\n",  name, f.getSurface() );
         System.out.printf( "%s.center  = %s\n",  name, f.getCenter() );
