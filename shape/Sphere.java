@@ -1,5 +1,6 @@
 package shape;
 
+import java.util.Objects;
 
 /**
  * Sphere - see task
@@ -17,8 +18,15 @@ public class Sphere implements Shape {
     
     
     
+    /**
+     * TODO ...
+     * 
+     * @param center  ...
+     * @param radius  ...
+     */
     public Sphere( final Point center, final double radius ){
-        assert radius >= 0 : "invalid parameter : positive radius expected";
+        assert isValidPoint( radius ) : "Illegal Argument : positive radius expected";
+        
         this.center = center;
         this.radius = radius;
     }//contructor()
@@ -35,7 +43,7 @@ public class Sphere implements Shape {
     
     @Override
     public double getVolume(){ return 4.0/3.0 * Math.PI * radius*radius*radius; }
-        
+    
     
     @Override
     public String toString(){
@@ -49,14 +57,18 @@ public class Sphere implements Shape {
     
     // NICHT eingefordert !!! vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
     
-    static public boolean isValid( final Point point, final double radius ){    // NICHT eingefordert und Studenten sind NICHT auf static trainiert
+    /**
+     * TODO ...
+     */
+    static public boolean isValidPoint( final double radius ){                  // NICHT eingefordert und Studenten sind NICHT auf static trainiert
         return radius>=0;
     }//method()
     
     
-    
-    @Override
-    public boolean equals( final Object otherObject ){                          // NICHT eingefordert
+    /**
+     * TODO ...
+     */
+    public boolean isSimiliar( final Object otherObject ){                      // NICHT eingefordert
         if( this==otherObject )  return true;                                   // beide Objekte identisch?
         if( null==otherObject )  return false;                                  // existiert other?
         if( getClass()!=otherObject.getClass() )  return false;                 // Class-Objekte identisch?
@@ -68,13 +80,55 @@ public class Sphere implements Shape {
     }//method()
     
     
+    
     @Override
-    public int hashCode() {                                                     // NICHT eingefordert
+    public boolean equals( final Object otherObject ){                          // NICHT eingefordert
+        if( this==otherObject )  return true;                                   // beide Objekte identisch?
+        if( null==otherObject )  return false;                                  // existiert other?
+        if( getClass()!=otherObject.getClass() )  return false;                 // Class-Objekte identisch?
+        //
+        final Sphere other = (Sphere)( otherObject );
+        if( ! Objects.equals( center, other.center ))  return false;            // Vergleich der Attribute
+        if( Double.doubleToLongBits( radius ) != Double.doubleToLongBits( other.radius ))  return false;                
+        return true;
+    }//method()
+    
+    @Override
+    public int hashCode(){                                                      // NICHT eingefordert und KRITISCH ! Siehe equals()
+        return Objects.hash( center, radius );
+    }//method()
+    
+    /*
+    "scheinbar brauchbares" equals() bricht aber contract - Siehe isSimiliar() - dieses equals ist auch NICHT transitiv
+    @Override
+    public boolean equals( final Object otherObject ){                          // NICHT eingefordert
+        if( this==otherObject )  return true;                                   // beide Objekte identisch?
+        if( null==otherObject )  return false;                                  // existiert other?
+        if( getClass()!=otherObject.getClass() )  return false;                 // Class-Objekte identisch?
+        //
+        final Sphere other = (Sphere)( otherObject );
+        final double delta = radius - other.radius;
+        if( delta < -epsilon || epsilon < delta ) return false;                 // Vergleich der Attribute
+        return true;
+    }//method()
+    //
+    @Override
+    public int hashCode(){                                                      // NICHT eingefordert und KRITISCH ! Siehe equals()
+        if( true )  throw new UnsupportedOperationException( "contract broken :  equals()<->hashCode()" );
+        return 42;
+    }//method()
+    
+    
+    
+    "ausgeschriebener" hashCode für unkritisches equals()
+    @Override                                                                   // NICHT eingefordert
+    public int hashCode() {                                                     
         final int prime = 31;
         int result = ((center == null) ? 0 : center.hashCode());
         long temp = Double.doubleToLongBits(radius);
         result = prime * result + (int) (temp ^ (temp >>> 32));
         return result;
-    }//method()    
+    }//method()
+    */
     
 }//class
