@@ -1,3 +1,4 @@
+// This source code is UTF-8 coded - see https://stackoverflow.com/questions/9180981/how-to-support-utf-8-encoding-in-eclipse
 package shape;
 
 
@@ -12,8 +13,8 @@ import java.util.Arrays;
  * @version  2022/05/17 (#1)
  */
 public class Cuboid implements Shape {
-
-    public final Point[] point;
+    
+    protected final Point[] point;
     
     // edgeLength ist NICHT eingefordert, macht es aber angenehmer
     // Studenten muessen "jetzt" nur private und public beherrschen
@@ -23,13 +24,13 @@ public class Cuboid implements Shape {
     
     
     
-    // Konstruktor liegt Annahme zugrund, dass Koerper statisch sind - sich also nicht ueber die Zeit verändern
+    // Konstruktor liegt Annahme zugrund, dass Koerper statisch sind - sich also nicht ueber die Zeit veraendern
     public Cuboid( final Point... point ){
-        assert point.length==8 : String.format( "invalid parameter - 8 points were expected and %d received", point.length );
+        assert point.length==8 : String.format( "Illegal Argument : 8 points were expected and %d received", point.length );
         final double[] lineLength = Cuboid.computeLineLength( point );
-        assert Cuboid.isValid( lineLength ) : "invalid parameter/points - valid cuboid expected";
-        this.point = point;
+        assert Cuboid.isValid( lineLength ) : "Illegal Argument : valid cuboid expected, but shape is NOT cuboid";
         
+        this.point = point;
         final double x = lineLength[0];
         final double y = lineLength[4];
         double z = lineLength[8];
@@ -73,7 +74,6 @@ public class Cuboid implements Shape {
             Arrays.toString( edgeLength ),
             Arrays.toString( point )
         );
-      //return String.format( "[<Cuboid>: point=%s]", Arrays.toString(point));  // ist dieses Semester auch ok bzw. KEIN Cuboid.class.getSimpleName() als "Schutz" vor Refactoring eingefordert
     }//method()
     
     
@@ -91,13 +91,13 @@ public class Cuboid implements Shape {
     // "isValid" is subfunction of "isValid" and requires sorted array as parameter
     static private boolean isValid( final double[] lineLength ){                // private on purpose
         assert lineLength.length==28 : String.format( "invalid parameter - 28 line length were expected and %d received", lineLength.length );
-        return ( lineLength[ 3]-lineLength[ 0] < epsilon )                      // "1.Kante"
-            && ( lineLength[ 7]-lineLength[ 4] < epsilon )                      // "2.Kante"
-            && ( lineLength[11]-lineLength[ 8] < epsilon )                      // "3.Kante" oder "1.Flächendiagonale"
-            && ( lineLength[15]-lineLength[12] < epsilon )                      // "1.Flächendiagonale" oder "3.Kante"
-            && ( lineLength[19]-lineLength[16] < epsilon )                      // "2.Flächendiagonale"
-            && ( lineLength[23]-lineLength[20] < epsilon )                      // "3.Flächendiagonale"
-            && ( lineLength[27]-lineLength[24] < epsilon );                     // Raumdiagonale
+        return ( lineLength[ 3]-lineLength[ 0] <= epsilon )                     // "1.Kante"
+            && ( lineLength[ 7]-lineLength[ 4] <= epsilon )                     // "2.Kante"
+            && ( lineLength[11]-lineLength[ 8] <= epsilon )                     // "3.Kante" oder "1.Flächendiagonale"
+            && ( lineLength[15]-lineLength[12] <= epsilon )                     // "1.Flächendiagonale" oder "3.Kante"
+            && ( lineLength[19]-lineLength[16] <= epsilon )                     // "2.Flächendiagonale"
+            && ( lineLength[23]-lineLength[20] <= epsilon )                     // "3.Flächendiagonale"
+            && ( lineLength[27]-lineLength[24] <= epsilon );                    // Raumdiagonale
     }//method()
     //
     static protected double[] computeLineLength( final Point... point ){        // protected on purpose

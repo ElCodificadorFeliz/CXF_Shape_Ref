@@ -1,6 +1,9 @@
+// This source code is UTF-8 coded - see https://stackoverflow.com/questions/9180981/how-to-support-utf-8-encoding-in-eclipse
 package shape;
 
+
 import java.util.Objects;
+
 
 /**
  * Sphere - see task
@@ -68,14 +71,15 @@ public class Sphere implements Shape {
     /**
      * TODO ...
      */
-    public boolean isSimiliar( final Object otherObject ){                      // NICHT eingefordert
+    public boolean isAcceptedAsEqualEqual( final Object otherObject, final double tolerance ){  // NICHT eingefordert - bewusst andere Schreibweise zur Abgrenzung
+        assert 0<=tolerance: "Illegal Argument : Negative tolerance is NOT supported";
+        //
         if( this==otherObject )  return true;                                   // beide Objekte identisch?
         if( null==otherObject )  return false;                                  // existiert other?
         if( getClass()!=otherObject.getClass() )  return false;                 // Class-Objekte identisch?
-        //
         final Sphere other = (Sphere)( otherObject );
-        final double delta = radius - other.radius;
-        if( delta < -epsilon || epsilon < delta ) return false;                 // Vergleich der Attribute
+        final double delta = radius - other.radius;                             // Vergleich der Attribute
+        if( delta < -tolerance || tolerance < delta ) return false;
         return true;
     }//method()
     
@@ -86,7 +90,6 @@ public class Sphere implements Shape {
         if( this==otherObject )  return true;                                   // beide Objekte identisch?
         if( null==otherObject )  return false;                                  // existiert other?
         if( getClass()!=otherObject.getClass() )  return false;                 // Class-Objekte identisch?
-        //
         final Sphere other = (Sphere)( otherObject );
         if( ! Objects.equals( center, other.center ))  return false;            // Vergleich der Attribute
         if( Double.doubleToLongBits( radius ) != Double.doubleToLongBits( other.radius ))  return false;                

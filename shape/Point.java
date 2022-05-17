@@ -1,7 +1,9 @@
+// This source code is UTF-8 coded - see https://stackoverflow.com/questions/9180981/how-to-support-utf-8-encoding-in-eclipse
 package shape;
  
 
 import java.util.Arrays;
+import java.util.Objects;
 
 
 /**
@@ -25,9 +27,9 @@ public class Point {
      * @param dim  ...
      */
     public Point( final double... dim ){
-        assert dim.length == 3 : "invalid parameter - 3 dimensions are expected";
+        assert dim.length == 3 : "Illegal Argument : 3 dimensions are expected";
         this.dim = dim;
-    }//Point()
+    }//constructor()
     
     
     
@@ -35,8 +37,14 @@ public class Point {
     
     @Override
     public String toString(){
-        return String.format( "[<%s>:(%.2f;%.2f;%.2f)]",  Point.class.getSimpleName(), dim[0], dim[1], dim[2] );
-    }//toString()
+        return String.format(
+            "[<%s>:(%.2f;%.2f;%.2f)]",
+            Point.class.getSimpleName(),
+            dim[0],
+            dim[1],
+            dim[2]
+        );
+    }//method()
     
     
     
@@ -44,32 +52,42 @@ public class Point {
     
     // NICHT eingefordert !!! vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
     
-    @Override
-    public boolean equals( final Object other ){
-        return  this == other
-            || (    other != null )
-                &&  getClass() == other.getClass()
-                &&  internalIsEqual( (Point)( other ) );
-    }//equals()
-    //
-    private boolean internalIsEqual( final Point other ){                       // internal subfunction of equals()
-        return Arrays.equals( dim, other.dim );
-    }//internalIsEqual()
-    //
-    public boolean isSimiliar( final Point other, final double tolerance ){
-        return  getClass() == other.getClass()
-            &&  Math.abs(dim[0]-other.dim[0])<Shape.epsilon
-            &&  Math.abs(dim[1]-other.dim[1])<Shape.epsilon
-            &&  Math.abs(dim[2]-other.dim[2])<Shape.epsilon;
-    }
+    /**
+     * TODO ...
+     * 
+     * @param otherObject  ...
+     * @param tolerance  ...
+     * @return  ...
+     */
+    public boolean isAcceptedAsEqual( final Object otherObject,  final double tolerance ){
+        assert 0<=tolerance: "Illegal Argument : Negative tolerance is NOT supported";
+        //
+        if( this==otherObject )  return true;                                   // beide Objekte identisch?
+        if( null==otherObject )  return false;                                  // existiert other?
+        if( getClass()!=otherObject.getClass() )  return false;                 // Class-Objekte identisch?
+        final Point other = ((Point) otherObject );
+        if( dim.length != other.dim.length )  return false;
+        for( int d=dim.length; --d>=0; ){
+            if( Math.abs( dim[d]-other.dim[d] ) > tolerance ) return false;
+        }//for
+        return true;                                                            // Keine Erbmasse
+    }//method()
     
     
+    
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + Arrays.hashCode(dim);
-        return result;
-    }//hashCode()
+    public boolean equals( final Object otherObject ){                          // NICHT eingefordert
+        if( this==otherObject )  return true;                                   // beide Objekte identisch?
+        if( null==otherObject )  return false;                                  // existiert other?
+        if( getClass()!=otherObject.getClass() )  return false;                 // Class-Objekte identisch?
+        final Point other = (Point)( otherObject );
+        if( ! Arrays.equals( dim, other.dim ))  return false;                   // Vergleich der Attribute
+        return true;                                                            // Keine Erbmasse
+    }//method()
+    //
+    @Override
+    public int hashCode(){                                                      // NICHT eingefordert und KRITISCH ! Siehe equals()
+        return Objects.hash( dim );
+    }//method()
     
 }//Point

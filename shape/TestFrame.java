@@ -1,3 +1,4 @@
+// This source code is UTF-8 coded - see https://stackoverflow.com/questions/9180981/how-to-support-utf-8-encoding-in-eclipse
 package shape;
 
 
@@ -7,7 +8,7 @@ package shape;
  * @author   Michael Schäfers ; P1@Hamburg-UAS.eu 
  * @version  2015/11/13
  */
-public class TestFrameForA4x2 {
+public class TestFrame {
     
     /**
      * Testing A4x2

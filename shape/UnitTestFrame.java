@@ -10,7 +10,7 @@ import java.util.*;
  * @author   Michael Schäfers ; P1@Hamburg-UAS.eu 
  * @version  2015/11/13
  */
-public class TheVeryTestFrameForA4x2_UnderDevelopment {
+public class UnitTestFrame {
     
     /**
      * Note that this is JUnit Test
