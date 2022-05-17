@@ -1,3 +1,5 @@
+package shape;
+
 
 public class Cube extends Cuboid {
     

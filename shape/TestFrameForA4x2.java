@@ -1,3 +1,5 @@
+package shape;
+
 
 /**
  * TestFrame for A4x2: ...

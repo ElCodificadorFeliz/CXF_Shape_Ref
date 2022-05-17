@@ -1,6 +1,8 @@
+package shape;
  
 
 import java.util.Arrays;
+
 
 public class Point {
     
