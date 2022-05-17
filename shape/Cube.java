@@ -6,7 +6,7 @@ public class Cube extends Cuboid {
     public Cube( final Point... point ){
         super( point );
         assert super.edgeLength[0]<=super.edgeLength[1] && super.edgeLength[1]<=super.edgeLength[2] : "internal bug in cuboid class - edgeLength is NOT ordered";
-        assert super.edgeLength[2]-super.edgeLength[0]<Field.epsilon : "invalid parameter/points - valid cube expected";
+        assert super.edgeLength[2]-super.edgeLength[0]<Shape.epsilon : "invalid parameter/points - valid cube expected";
     }//method()
     
     

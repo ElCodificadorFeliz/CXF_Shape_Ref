@@ -1,7 +1,7 @@
 package shape;
 
 
-public abstract interface Field {
+public abstract interface Shape {
     
     public static final double epsilon = 1e-12;
     

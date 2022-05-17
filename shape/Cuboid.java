@@ -4,7 +4,7 @@ package shape;
 import java.util.Arrays;
 
 
-public class Cuboid implements Field {
+public class Cuboid implements Shape {
 
     public final Point[] point;
     
@@ -24,7 +24,7 @@ public class Cuboid implements Field {
         final double x = lineLength[0];
         final double y = lineLength[4];
         double z = lineLength[8];
-        if ( Math.abs( x*x+y*y - z*z ) < Field.epsilon ){                       // ist z Flaechendiagonale (und NICHT 3.Kante) ? 
+        if ( Math.abs( x*x+y*y - z*z ) < Shape.epsilon ){                       // ist z Flaechendiagonale (und NICHT 3.Kante) ? 
             z = lineLength[12];                                                 // "Die Alternative" ist dann die 3.Kante
         }//if
         

@@ -15,12 +15,12 @@ public class TestFrameForA4x2 {
     public void doTest(){
         
         System.out.printf( "Sphere\n" );
-        Field k1 = new Sphere( new Point(0,0,0), 1 );
+        Shape k1 = new Sphere( new Point(0,0,0), 1 );
         printIt( k1, "k1" );
         System.out.printf( "\n\n" );
         
         System.out.printf( "Cuboid\n" );
-        Field q1 = new Cuboid(
+        Shape q1 = new Cuboid(
             new Point(0,0,0), new Point(0,1,0), new Point(0,0,1), new Point(0,1,1),
             new Point(1,0,0), new Point(1,1,0), new Point(1,0,1), new Point(1,1,1)
         );
@@ -28,7 +28,7 @@ public class TestFrameForA4x2 {
         System.out.printf( "\n\n" );
         
         System.out.printf( "Cube\n" );
-        Field w1 = new Cube(
+        Shape w1 = new Cube(
             new Point(0,0,0), new Point(0,1,0), new Point(0,0,1), new Point(0,1,1),
             new Point(1,0,0), new Point(1,1,0), new Point(1,0,1), new Point(1,1,1)
         );
@@ -39,7 +39,7 @@ public class TestFrameForA4x2 {
         
         // Cube:
         System.out.printf( "Cube\n" );
-        Field t0w = null;
+        Shape t0w = null;
         try{
             t0w = new Cube(
                 new Point( 6.7,  3.9, 1.3),  new Point(-8.3,  4.9, 5.3),  new Point(-6.3, -1.1, 14.3),  new Point(2.7,  4.9, 16.3),
@@ -54,7 +54,7 @@ public class TestFrameForA4x2 {
         
         // Cube:
         System.out.printf( "Cube\n" );
-        Field t1w = null;
+        Shape t1w = null;
         try{
             t1w = new Cube(
                 new Point(0,0,0), new Point(0,5,0), new Point(5,0,0), new Point(5,5,0),
@@ -70,7 +70,7 @@ public class TestFrameForA4x2 {
         
         // "nix":
         System.out.printf( "nix\n" );
-        Field t2w = null;
+        Shape t2w = null;
         try{
             t2w = new Cube(
                 new Point(0,0,0), new Point(0,3,4), new Point(5,0,0), new Point(5,3,4),
@@ -81,7 +81,7 @@ public class TestFrameForA4x2 {
             System.out.printf( "t2w -> %s\n",  ex.getMessage() );
         }//try
         //
-        Field t2q = null;
+        Shape t2q = null;
         try{
             t2q = new Cuboid(
                 new Point(0,0,0), new Point(0,3,4), new Point(5,0,0), new Point(5,3,4),
@@ -98,7 +98,7 @@ public class TestFrameForA4x2 {
         
         // Cuboid:
         System.out.printf( "Cuboid\n" );
-        Field t3w = null;
+        Shape t3w = null;
         try{
             t3w = new Cube(
                 new Point(-2, -3, -5),  new Point(-2,  3, -5),  new Point( 2, -3, -5),  new Point( 2,  3, -5),
@@ -109,7 +109,7 @@ public class TestFrameForA4x2 {
             System.out.printf( "t3w -> %s\n",  ex.getMessage() );
         }//try
         //
-        Field t3q = null;
+        Shape t3q = null;
         try{
             t3q = new Cuboid(
                 new Point(-2, -3, -5),  new Point(-2,  3, -5),  new Point( 2, -3, -5),  new Point( 2,  3, -5),
@@ -127,7 +127,7 @@ public class TestFrameForA4x2 {
         // "nix": (-3,4,0), (-3,4,5), (0,0,0), (0,0,5), (2,4,0), (2,4,5), (5,0,0), (5,0,5)
         // Kein Wuerfel und kein Quader, aber Kantenlaenge immer 5
         System.out.printf( "nix\n" );        
-        Field t4w = null;
+        Shape t4w = null;
         try{
             t4w = new Cube(
                 new Point(-3, 4, 0),  new Point(0, 0, 0),  new Point( 2, 4, 0),  new Point( 5, 0, 0),
@@ -138,7 +138,7 @@ public class TestFrameForA4x2 {
             System.out.printf( "t4w -> %s\n",  ex.getMessage() );
         }//try
         //
-        Field t4q = null;
+        Shape t4q = null;
         try{
             t4q = new Cuboid(
                 new Point(-3, 4, 0),  new Point(0, 0, 0),  new Point( 2, 4, 0),  new Point( 5, 0, 0),
@@ -155,7 +155,7 @@ public class TestFrameForA4x2 {
         
         // "nix":
         System.out.printf( "nix\n" );
-        Field t5w = null;
+        Shape t5w = null;
         try{
             t5w = new Cube(
                 new Point(-6.0, 1.5, 2.5),  new Point(1.0, 0.0, 0.0),  new Point(1.0, 3.0, 0.0),  new Point(3.0, 1.5, 2.5),
@@ -166,7 +166,7 @@ public class TestFrameForA4x2 {
             System.out.printf( "t5w -> %s\n",  ex.getMessage() );
         }//try
         //
-        Field t5q = null;
+        Shape t5q = null;
         try{
             t5q = new Cuboid(
                 new Point(-6.0, 1.5, 2.5),  new Point(1.0, 0.0, 0.0),  new Point(1.0, 3.0, 0.0),  new Point(3.0, 1.5, 2.5),
@@ -183,7 +183,7 @@ public class TestFrameForA4x2 {
         
         // Cube:
         System.out.printf( "Cube\n" );
-        Field t6w = null;
+        Shape t6w = null;
         try{
             t6w = new Cube(
                 new Point(-8.3, +4.9,  5.3),  new Point(-2.3, -2.1, -0.7),  new Point(0.7, 10.9,  7.3),  new Point(6.7, +3.9,  1.3),
@@ -209,7 +209,7 @@ public class TestFrameForA4x2 {
         
         // Cube: ( -1.3, -2.3, -4.7 )   "+"     (4,4,7),    (1,-8,4)     (-8,1,4)
         System.out.printf( "Cube\n" );
-        Field t7w = null;
+        Shape t7w = null;
         try{
             t7w = new Cube(
                 new Point(-1.3, -2.3, -4.7),  new Point(-0.3, -10.3, -0.7),  new Point(+3.7, -6.3, 6.3),  new Point(-8.3, -9.3,  3.3),
@@ -225,7 +225,7 @@ public class TestFrameForA4x2 {
         
         // Cuboid: ( -3.7, -1.7, -4.3 )   "+"   5*(4,4,7)   3*(1,-8,4)   2*(-8,1,4)
         System.out.printf( "Cuboid\n" );
-        Field t8w = null;
+        Shape t8w = null;
         try{
             t8w = new Cube(
                 new Point(-3.7, -1.7, -4.3),  new Point( -0.7, -25.7, 7.7),  new Point(19.3, -5.7, 42.7),  new Point(-16.7, -23.7, 15.7),
@@ -236,7 +236,7 @@ public class TestFrameForA4x2 {
             System.out.printf( "t8w -> %s\n",  ex.getMessage() );
         }//try
         //
-        Field t8q = null;
+        Shape t8q = null;
         try{
             t8q = new Cuboid(
                 new Point(-3.7, -1.7, -4.3),  new Point( -0.7, -25.7, 7.7),  new Point(19.3, -5.7, 42.7),  new Point(-16.7, -23.7, 15.7),
@@ -253,7 +253,7 @@ public class TestFrameForA4x2 {
         
         // Cuboid: ( -1.9, -0.7, -3.1 )   "+"   2.5*(2,2,1)   (1,-2,2)   1.5*(-4,2,4)
         System.out.printf( "Cuboid\n" );
-        Field t9w = null;
+        Shape t9w = null;
         try{
             t9w = new Cube(
                 new Point(-4.9, 0.8, -0.1),  new Point(-0.9, -2.7, -1.1),  new Point( 3.1,  4.3, -0.6),  new Point(-1.9, -0.7, -3.1),
@@ -264,7 +264,7 @@ public class TestFrameForA4x2 {
             System.out.printf( "t9w -> %s\n",  ex.getMessage() );
         }//try
         //
-        Field t9q = null;
+        Shape t9q = null;
         try{
             t9q = new Cuboid(
                 new Point(-4.9, 0.8, -0.1),  new Point(-0.9, -2.7, -1.1),  new Point( 3.1,  4.3, -0.6),  new Point(-1.9, -0.7, -3.1),
@@ -279,7 +279,7 @@ public class TestFrameForA4x2 {
     
     
     
-    private void printIt( final Field f, final String name ){
+    private void printIt( final Shape f, final String name ){
         System.out.printf( "%s.volume  = %f\n",  name, f.getVolume() );
         System.out.printf( "%s.surface = %f\n",  name, f.getSurface() );
         System.out.printf( "%s.center  = %s\n",  name, f.getCenter() );

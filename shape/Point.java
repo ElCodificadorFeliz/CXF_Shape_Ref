@@ -42,9 +42,9 @@ public class Point {
     //
     public boolean isEqual( final Point other, final double tolerance ){
         return  getClass() == other.getClass()
-            &&  Math.abs(dim[0]-other.dim[0])<Field.epsilon
-            &&  Math.abs(dim[1]-other.dim[1])<Field.epsilon
-            &&  Math.abs(dim[2]-other.dim[2])<Field.epsilon;
+            &&  Math.abs(dim[0]-other.dim[0])<Shape.epsilon
+            &&  Math.abs(dim[1]-other.dim[1])<Shape.epsilon
+            &&  Math.abs(dim[2]-other.dim[2])<Shape.epsilon;
     }
     
     

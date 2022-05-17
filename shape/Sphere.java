@@ -1,7 +1,7 @@
 package shape;
 
 
-public class Sphere implements Field {
+public class Sphere implements Shape {
     
     private final Point center;
     private final double radius;
