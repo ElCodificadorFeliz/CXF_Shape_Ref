@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class SimplePermutitioner<T> implements Permutationer<T>,Serializable {
+public class SimplePermutationer<T> implements Permutationer<T>,Serializable {
     //
     //--VERSION:-------------------------------#---vvvvvvvvv---vvvv-vv-vv--vv
     //  ========                               #___~version~___YYYY_MM_DD__dd_
@@ -48,8 +48,6 @@ public class SimplePermutitioner<T> implements Permutationer<T>,Serializable {
     
     
     
-  //final private T[] unpermutatedOriginal;
-    
     final private Stack<ElemInfo> coreState;
     
     private T[] currentPermutation; 
@@ -64,19 +62,19 @@ public class SimplePermutitioner<T> implements Permutationer<T>,Serializable {
      * 
      * @param permutable
      */
-    public SimplePermutitioner( final T[] permutable ){
+    public SimplePermutationer( final T[] permutable ){
         assert  2<=permutable.length : "Illegal Argument : At least 2 array elements are required for actual permutation";
         assert 12>=permutable.length : "Illegal Argument : Max. number of array elements allowed is 12 for permutation - consider computation time!";
         
-      //unpermutatedOriginal = permutable;
-        currentPermutation = (T[])( new Object[permutable.length] );
+        currentPermutation = Arrays.copyOf( permutable, permutable.length );    //(T[])( new Object[permutable.length] );
         
         numberOfPermutationsStillToDo = facu( permutable.length );
         
         coreState = new SimpleFastDequeStack<ElemInfo>();
         
         T elem = permutable[0];
-        currentPermutation[0] = elem;
+      //currentPermutation[0] = elem;   // for array generation : currentPermutation = Arrays.copyOf( permutable, permutable.length );
+        assert currentPermutation[0] == elem : "internal error";
         int localIndex = 0;
         List<Integer> localToDoList = new ArrayList<Integer>();
         for( int posi=0; posi<permutable.length; posi++ ) localToDoList.add( posi );
@@ -91,7 +89,8 @@ public class SimplePermutitioner<T> implements Permutationer<T>,Serializable {
             //
             //localIndex gets new view
             elem = permutable[i];
-            currentPermutation[i] = elem;
+          //currentPermutation[i] = elem;      // for array generation : currentPermutation = Arrays.copyOf( permutable, permutable.length );
+            assert currentPermutation[i] == elem : "internal error";
             localIndex = 0;
             ei = new ElemInfo( elem, localIndex, localToDoList );
             coreState.push( ei );
@@ -163,14 +162,5 @@ public class SimplePermutitioner<T> implements Permutationer<T>,Serializable {
         for( int i=number; i>=2; i-- )  resu *= i;
         return resu;
     }//method()
-    
-    /*
-    private void dbgPrintCoreState(){
-        while( ! coreState.isEmpty() ){
-            final ElemInfo ei = coreState.pop();
-            System.out.printf( "%s\n",  ei );
-        }
-    }//method()
-    */
     
 }//class

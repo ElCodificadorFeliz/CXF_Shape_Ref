@@ -1,6 +1,9 @@
 package test;
 
 
+import static org.junit.jupiter.api.Assertions.*;
+import static shape.Shape.epsilon;
+
 import java.util.*;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -11,8 +14,12 @@ import org.junit.jupiter.api.TestMethodOrder;
 import shape.Cube;
 import shape.Cuboid;
 import shape.Point;
+import shape.Shape;
+import test.support.Permutationer;
+import test.support.SimplePermutationer;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+
 
 
 
@@ -43,16 +50,108 @@ public class UnitTestFrame {
     }//method()    
     
     
+    
+    
+    
     @Test
-    @Order(100_0100)
+    @Order(100_0101)
     //@Test
-    public void simpleTest(){
-        final Point[] orginalPoints = {
+    public void testWithCubePoints01(){
+        final String testName = new Object(){}.getClass().getEnclosingMethod().getName();
+        final Point[] shapePoints = {
                 new Point( +0.0,  +0.0,  +0.0),   new Point( +0.0,  +1.0,  +0.0),   new Point( +0.0,  +0.0,  +1.0),   new Point( +0.0,  +1.0,  +1.0),
                 new Point( +1.0,  +0.0,  +0.0),   new Point( +1.0,  +1.0,  +0.0),   new Point( +1.0,  +0.0,  +1.0),   new Point( +1.0,  +1.0,  +1.0)
         };
-        
-        
+        assert shapePoints.length==8 : String.format( "internal setup error - 8 points were expected and %d found", shapePoints );
+        final Permutationer<Point> permu = new SimplePermutationer<Point>( shapePoints );
+        while(permu.hasNext() ){
+            
+            // local declarations
+            //
+            double expectedSurface;
+            double computedSurface;
+            double expectedVolume;
+            double computedVolume;
+            Point computedCenter;
+            Point expectedCenter;
+            //
+            boolean exceptionDetected;
+            String exceptionMessage = "";
+            //
+            final Point[] currentPoints = permu.next();
+            
+            
+            // test cuboid
+            //
+            exceptionDetected = false;
+            Cuboid cuboid = null;
+            try{
+                cuboid = new Cuboid( currentPoints );
+            }catch( final Exception | AssertionError ex ){
+                exceptionDetected = true;
+                exceptionMessage = ex.getMessage();
+            }finally{
+                if( exceptionDetected ){
+                    StringBuilder sb = new StringBuilder( testName );
+                    sb.append( ":\n" );
+                    sb.append( "ERROR: Cuboid was NOT detected  based on :\n" );
+                    sb.append( Arrays.toString( currentPoints ));
+                    sb.append( "\n" );
+                    sb.append( exceptionMessage );
+                    System.out.printf( "%s\n", sb.toString() );
+                    System.out.printf( "\n\n" );
+                    fail( "ERROR: Cuboid was NOT detected" );
+                }//if
+            }//try
+            //
+            expectedSurface = 6.0;
+            computedSurface = cuboid.getSurface();
+            assertTrue( Math.abs( expectedSurface - computedSurface ) <= epsilon, String.format( "expected: <%f> but was: <%f>", expectedSurface, computedSurface ) );
+            //
+            expectedVolume = 1.0;
+            computedVolume = cuboid.getVolume();
+            assertTrue( Math.abs( 1.0 - cuboid.getVolume() )  <= epsilon, String.format( "expected: <%f> but was: <%f>", 1.0, cuboid.getVolume() ) );
+            //
+            expectedCenter = new Point( 0.5, 0.5, 0.5 );
+            computedCenter = cuboid.getCenter();
+            assertTrue( expectedCenter.isAcceptedAsEqual( computedCenter, epsilon ), String.format( "expected: <%s> but was: <%s>", expectedCenter, computedCenter ) );
+            
+            
+            //test cube
+            //
+            exceptionDetected = false;
+            Cube cube = null;
+            try{
+                cube = new Cube( currentPoints );
+            }catch( final Exception | AssertionError ex ){
+                exceptionDetected = true;
+            }finally{
+                if( exceptionDetected ){
+                    StringBuilder sb = new StringBuilder( testName );
+                    sb.append( ":\n" );
+                    sb.append( "ERROR: Cube was NOT detected  based on :\n" );
+                    sb.append( Arrays.toString( currentPoints ));
+                    sb.append( "\n" );
+                    sb.append( exceptionMessage );
+                    System.out.printf( "%s\n", sb.toString() );
+                    System.out.printf( "\n\n" );
+                    fail( "ERROR: Cube was NOT detected" );
+                }//if
+            }//try
+            //
+            expectedSurface = 6.0;
+            computedSurface = cube.getSurface();
+            assertTrue( Math.abs( expectedSurface - computedSurface ) <= epsilon, String.format( "expected: <%f> but was: <%f>", expectedSurface, computedSurface ) );
+            //
+            expectedVolume = 1.0;
+            computedVolume = cube.getVolume();
+            assertTrue( Math.abs( 1.0 - cuboid.getVolume() )  <= epsilon, String.format( "expected: <%f> but was: <%f>", 1.0, cuboid.getVolume() ) );
+            //
+            expectedCenter = new Point( 0.5, 0.5, 0.5 );
+            computedCenter = cube.getCenter();
+            assertTrue( expectedCenter.isAcceptedAsEqual( computedCenter, epsilon ), String.format( "expected: <%s> but was: <%s>", expectedCenter, computedCenter ) );
+            
+        }//while
     }//method()
     
     
