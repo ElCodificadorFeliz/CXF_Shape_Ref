@@ -1,38 +1,66 @@
-package shape;
+package test;
 
 
 import java.util.*;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+
+import shape.Cube;
+import shape.Cuboid;
+import shape.Point;
+
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+
+
 
 /**
- * TestFrame for A4x2: ...
+ * UnitTestFrame : ...
  * 
  * @author   Michael Schäfers ; P1@Hamburg-UAS.eu 
  * @version  2015/11/13
  */
+@TestMethodOrder(OrderAnnotation.class)
 public class UnitTestFrame {
     
-    /**
-     * Note that this is JUnit Test
-     */
-    public void doTest(){
+    @BeforeAll
+    public static void init(){
+        System.out.printf( "TestFrame information\n" );
+        System.out.printf( "=====================\n" );
+        System.out.printf( "\n\n" );
+        System.out.printf( "Release:\n" );
+        System.out.printf( "    ...\n" );
+        System.out.printf( "\n\n" );
+        System.out.printf( "Environment:\n" );
+        System.out.printf( "    ...\n" );
+        System.out.printf( "\n\n\n\n" );
+        System.out.printf( "Start of actual tests\n" );
+        System.out.printf( "=====================\n" );
+        System.out.printf( "\n" );
+        System.out.flush();
+    }//method()    
+    
+    
+    @Test
+    @Order(100_0100)
+    //@Test
+    public void simpleTest(){
+        final Point[] orginalPoints = {
+                new Point( +0.0,  +0.0,  +0.0),   new Point( +0.0,  +1.0,  +0.0),   new Point( +0.0,  +0.0,  +1.0),   new Point( +0.0,  +1.0,  +1.0),
+                new Point( +1.0,  +0.0,  +0.0),   new Point( +1.0,  +1.0,  +0.0),   new Point( +1.0,  +0.0,  +1.0),   new Point( +1.0,  +1.0,  +1.0)
+        };
         
-        System.out.printf( "Nach [Rechts-Klick] auf Klasse nicht mit new ... ein Objekt erzeugen,\n" );
-        System.out.printf( "sondern \"Test All\" starten.\n" );
-        System.out.printf( "Es kann etwas dauern (ca. 10s).\n" );
-        System.out.printf( "Falls ein gruener Balken erscheint, was der Test erfolgreich.\n" );
-        System.out.printf( "Falls ein roter Balken erscheint, sind Fehler aufgetreten.\n" );
         
     }//method()
     
     
     
     
-    
+    // Cube
     //@Test
     public void test(){
-        
-        // Cube
         permutate(
             true,                   // cube expected ?
             true,                   // cuboid expected ?
