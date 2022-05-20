@@ -38,7 +38,7 @@ public class Point {
     @Override
     public String toString(){
         return String.format(
-            "[<%s>:(%.20f;%.20f;%.20f)]",
+            "[<%s>:(%f;%f;%f)]",
             Point.class.getSimpleName(),
             dim[0],
             dim[1],
