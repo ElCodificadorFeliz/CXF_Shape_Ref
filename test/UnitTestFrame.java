@@ -64,7 +64,7 @@ public class UnitTestFrame {
         final double expectedSurface = 6.0;
         final double expectedVolume = 2.0;
         final Point expectedCenter = new Point( 0.5, 0.5, 0.5 );
-        iTestWithCube( testName, expectedSurface, expectedVolume, expectedCenter, shapePoints );
+        iTestWithCubePoints( testName, expectedSurface, expectedVolume, expectedCenter, shapePoints );
         //  ( +0.0, +0.0, +0.0 )    "+"    (+1.0, +0.0, +0.0),  (+0.0, +1.0, +0.0),  (+0.0, +0.0, +1.0)
     }//method()
     
@@ -80,7 +80,7 @@ public class UnitTestFrame {
         final double expectedSurface = 6.0;
         final double expectedVolume = 2.0;
         final Point expectedCenter = new Point( 0.5, 0.5, 0.5 );
-        iTestWithCube( testName, expectedSurface, expectedVolume, expectedCenter, shapePoints );
+        iTestWithCubePoints( testName, expectedSurface, expectedVolume, expectedCenter, shapePoints );
         //  ( +0.0, +0.0, +0.0 )    "+"    (+5.0, +0.0, +0.0),  (+0.0, +5.0, +0.0),  (+0.0, +0.0, +5.0)
     }//method()
     
@@ -88,7 +88,7 @@ public class UnitTestFrame {
     
     
     
-    private void iTestWithCube(
+    private void iTestWithCubePoints(
         final String testName,
         final double expectedSurface,
         final double expectedVolume,
@@ -227,7 +227,7 @@ public class UnitTestFrame {
         
     }//method()
     
-    private void iTestWithCuboid(
+    private void iTestWithCuboidPoints(
         final String testName,
         final double expectedSurface,
         final double expectedVolume,
@@ -332,7 +332,7 @@ public class UnitTestFrame {
         
     }//method()
     
-    private void iTestWithShape(
+    private void iTestWithShapePoints(
             final String testName,
             final double expectedSurface,
             final double expectedVolume,
