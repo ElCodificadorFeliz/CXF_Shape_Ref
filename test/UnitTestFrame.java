@@ -512,177 +512,68 @@ public class UnitTestFrame {
     }//method()
     
     private void iTestWithShapePoints(
-            final String testName,
-            final Point... shapePoints
-        ){
-            assert shapePoints.length==8 : String.format( "internal setup error - 8 points were expected and %d found", shapePoints.length );
-            final Permutationer<Point> permu = new SimplePermutationer<Point>( shapePoints );
-            while(permu.hasNext() ){
-                
-                // local declarations
-                //
-                boolean exceptionDetected;
-                String exceptionMessage = "";
-                //
-                final Point[] currentPoints = permu.next();
-                
-                
-                // test cuboid
-                //
-                exceptionDetected = false;
-                Cuboid cuboid = null;
-                try{
-                    cuboid = new Cuboid( currentPoints );
-                }catch( final Exception | AssertionError ex ){
-                    exceptionDetected = true;
-                    exceptionMessage = ex.getMessage();
-                }finally{
-                    if( ! exceptionDetected ){
-                        StringBuilder sb = new StringBuilder( testName );
-                        sb.append( ":\n" );
-                        sb.append( "ERROR: Cuboid was detected  based on :\n" );
-                        sb.append( Arrays.toString( currentPoints ));
-                        sb.append( "\n" );
-                        sb.append( exceptionMessage );
-                        System.out.printf( "%s\n", sb.toString() );
-                        System.out.printf( "\n\n" );
-                        fail( "ERROR: Faulty cuboid was accepted" );
-                    }//if
-                }//try
-                
-                
-                //test cube
-                //
-                exceptionDetected = false;
-                Cube cube = null;
-                try{
-                    cube = new Cube( currentPoints );
-                }catch( final Exception | AssertionError ex ){
-                    exceptionDetected = true;
-                }finally{
-                    if( ! exceptionDetected ){
-                        StringBuilder sb = new StringBuilder( testName );
-                        sb.append( ":\n" );
-                        sb.append( "ERROR: Cube was detected  based on :\n" );
-                        sb.append( Arrays.toString( currentPoints ));
-                        sb.append( "\n" );
-                        sb.append( exceptionMessage );
-                        System.out.printf( "%s\n", sb.toString() );
-                        System.out.printf( "\n\n" );
-                        fail( "ERROR: Faulty cube was accepted" );
-                    }//if
-                }//try
-            }//while
-            
-        }//method()    
-    
-    // Cube
-    //@Test
-    public void test(){
-        
-        // nix (?)                  (Test#2)
-        permutate(
-            false,                  // cube expected ?
-            false,                  // cuboid expected ?
-            new Point( +0.0,  +0.0,  +0.0),   new Point( +0.0,  +3.0,  +4.0),   new Point( +5.0,  +0.0,  +0.0),   new Point( +5.0,  +3.0,  +4.0),
-            new Point( +0.0,  +5.0,  +0.0),   new Point( +0.0,  +8.0,  +4.0),   new Point( +5.0,  +5.0,  +0.0),   new Point( +5.0,  +8.0,  +4.0)
-        );
-        // ...
-        
-        // nix                      (Test#4)
-        permutate(
-            false,                  // cube expected ?
-            false,                  // cuboid expected ?
-            new Point( -3.0,  +4.0,  +0.0),   new Point( +0.0,  +0.0,  +0.0),   new Point( +2.0,  +4.0,  +0.0),   new Point( +5.0,  +0.0,  +0.0),
-            new Point( -3.0,  +4.0,  +5.0),   new Point( +0.0,  +0.0,  +5.0),   new Point( +2.0,  +4.0,  +5.0),   new Point( +5.0,  +0.0,  +5.0)
-        );
-        // KEIN Wuerfel und KEIN Quader, aber Kantenlaenge immer 5
-        
-        // nix (?)                  (Test#5)
-        permutate(
-            false,                  // cube expected ?
-            false,                  // cuboid expected ?
-            new Point( -6.0,  +1.5,  +2.5),   new Point( +1.0,  +0.0,  +0.0),   new Point( +1.0,  +3.0,  +0.0),   new Point( +3.0,  +1.5,  +2.5),
-            new Point( -1.0,  +1.5,  +2.5),   new Point( +1.0,  +0.0,  +5.0),   new Point( +1.0,  +3.0,  +5.0),   new Point( +8.0,  +1.5,  +2.5)
-        );
-        // ...
-        
-        // nix (?)
-        permutate(
-            false,                  // cube expected ?
-            false,                  // cuboid expected ?
-            new Point( +1.0,  +1.0,  +0.0),   new Point( -1.0,  +1.0,  +0.0),   new Point( -1.0,  -1.0,  +1.0),   new Point( +1.0,  +1.0,  +1.0),
-            new Point( Math.sqrt(2), 0, 2),   new Point( 0, Math.sqrt(2), 2),   new Point(-Math.sqrt(2), 0, 2),   new Point( 0,-Math.sqrt(2), 2)
-        );
-        // ...
-        
-    }//method()
-    
-    
-    
-    
-    
-    private void permutate( final boolean cubeExpected, final boolean cuboidExpected, final Point... org ){
-        final Point[] permutated = new Point[org.length];
-        permutateReku( org, permutated, 0, cubeExpected, cuboidExpected );
-    }//method()
-    
-    private void permutateReku(
-        final Point[] org,
-        final Point[] permutated,
-        final int currentElem,
-        final boolean cubeExpected,
-        final boolean cuboidExpected
+        final String testName,
+        final Point... shapePoints
     ){
-        assert permutated.length==8 : String.format( "invalid parameter - 8 points were expectedand %d received", permutated.length );
-        if( currentElem==org.length  ){
-            boolean checkResult;
+        assert shapePoints.length==8 : String.format( "internal setup error - 8 points were expected and %d found", shapePoints.length );
+        final Permutationer<Point> permu = new SimplePermutationer<Point>( shapePoints );
+        while(permu.hasNext() ){
+            
+            // local declarations
+            //
+            boolean exceptionDetected;
+            String exceptionMessage = "";
+            //
+            final Point[] currentPoints = permu.next();
+            
             
             // test cuboid
-            checkResult = false;
+            //
+            exceptionDetected = false;
+            Cuboid cuboid = null;
             try{
-                Cuboid cuboid = new Cuboid( permutated );
-                checkResult = cuboid.isValid();
+                cuboid = new Cuboid( currentPoints );
             }catch( final Exception | AssertionError ex ){
-                // nothing is done on purpose
+                exceptionDetected = true;
+                exceptionMessage = ex.getMessage();
             }finally{
-                if( checkResult != cuboidExpected ){
-                    System.out.printf(
-                        "ERROR: Cuboid(%s) was reported as %s\n",
-                        Arrays.toString( permutated ),
-                        checkResult
-                    );
-                  //assertTrue( String.format( "Cuboid( %s )", Arrays.toString( permutated ) ),  false );
+                if( ! exceptionDetected ){
+                    StringBuilder sb = new StringBuilder( testName );
+                    sb.append( ":\n" );
+                    sb.append( "ERROR: Cuboid was detected  based on :\n" );
+                    sb.append( Arrays.toString( currentPoints ));
+                    sb.append( "\n" );
+                    sb.append( exceptionMessage );
+                    System.out.printf( "%s\n", sb.toString() );
+                    System.out.printf( "\n\n" );
+                    fail( "ERROR: Faulty cuboid was accepted" );
                 }//if
             }//try
             
-            // test cube
-            checkResult = false;
+            
+            //test cube
+            //
+            exceptionDetected = false;
+            Cube cube = null;
             try{
-                Cube cube = new Cube( permutated );
-                checkResult = cube.isValid();
+                cube = new Cube( currentPoints );
             }catch( final Exception | AssertionError ex ){
-                // nothing is done on purpose
+                exceptionDetected = true;
             }finally{
-                if( checkResult != cubeExpected ){
-                    System.out.printf(
-                        "ERROR: Cube(%s) was reported as %s\n",
-                        Arrays.toString( permutated ),
-                        checkResult
-                    );
-                  //assertTrue( String.format( "Cube( %s )", Arrays.toString( permutated ) ),  false );
+                if( ! exceptionDetected ){
+                    StringBuilder sb = new StringBuilder( testName );
+                    sb.append( ":\n" );
+                    sb.append( "ERROR: Cube was detected  based on :\n" );
+                    sb.append( Arrays.toString( currentPoints ));
+                    sb.append( "\n" );
+                    sb.append( exceptionMessage );
+                    System.out.printf( "%s\n", sb.toString() );
+                    System.out.printf( "\n\n" );
+                    fail( "ERROR: Faulty cube was accepted" );
                 }//if
             }//try
-            
-        }else{
-            for( int i=0; i<org.length; i++ ){
-                if( null == permutated[i] ){
-                    permutated[i] = org[currentElem];
-                    permutateReku( org, permutated, currentElem+1, cubeExpected, cuboidExpected );
-                    permutated[i] = null;
-                }//if
-            }//for
-        }//if
+        }//while
+        
     }//method()
     
 }//class
