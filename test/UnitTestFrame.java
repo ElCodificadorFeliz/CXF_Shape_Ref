@@ -55,18 +55,36 @@ public class UnitTestFrame {
     
     @Test
     @Order(100_0101)
-    //@Test
     public void testWithCubePoints01(){
         final String testName = new Object(){}.getClass().getEnclosingMethod().getName();
         final Point[] shapePoints = {
-                new Point( +0.0,  +0.0,  +0.0),   new Point( +0.0,  +1.0,  +0.0),   new Point( +0.0,  +0.0,  +1.0),   new Point( +0.0,  +1.0,  +1.0),
-                new Point( +1.0,  +0.0,  +0.0),   new Point( +1.0,  +1.0,  +0.0),   new Point( +1.0,  +0.0,  +1.0),   new Point( +1.0,  +1.0,  +1.0)
+            new Point( +0.0,  +0.0,  +0.0),   new Point( +0.0,  +1.0,  +0.0),   new Point( +0.0,  +0.0,  +1.0),   new Point( +0.0,  +1.0,  +1.0),
+            new Point( +1.0,  +0.0,  +0.0),   new Point( +1.0,  +1.0,  +0.0),   new Point( +1.0,  +0.0,  +1.0),   new Point( +1.0,  +1.0,  +1.0)
         };
         final double expectedSurface = 6.0;
-        final double expectedVolume = 1.0;
+        final double expectedVolume = 2.0;
         final Point expectedCenter = new Point( 0.5, 0.5, 0.5 );
         iTestWithCube( testName, expectedSurface, expectedVolume, expectedCenter, shapePoints );
+        //  ( +0.0, +0.0, +0.0 )    "+"    (+1.0, +0.0, +0.0),  (+0.0, +1.0, +0.0),  (+0.0, +0.0, +1.0)
     }//method()
+    
+    
+    @Test
+    @Order(100_0102)
+    public void testWithCubePoints02(){
+        final String testName = new Object(){}.getClass().getEnclosingMethod().getName();
+        final Point[] shapePoints = {
+            new Point( +0.0,  +0.0,  +0.0),   new Point( +0.0,  +5.0,  +0.0),   new Point( +0.0,  +0.0,  +5.0),   new Point( +0.0,  +5.0,  +5.0),
+            new Point( +5.0,  +0.0,  +0.0),   new Point( +5.0,  +5.0,  +0.0),   new Point( +5.0,  +0.0,  +5.0),   new Point( +5.0,  +5.0,  +5.0)
+        };
+        final double expectedSurface = 6.0;
+        final double expectedVolume = 2.0;
+        final Point expectedCenter = new Point( 0.5, 0.5, 0.5 );
+        iTestWithCube( testName, expectedSurface, expectedVolume, expectedCenter, shapePoints );
+        //  ( +0.0, +0.0, +0.0 )    "+"    (+5.0, +0.0, +0.0),  (+0.0, +5.0, +0.0),  (+0.0, +0.0, +5.0)
+    }//method()
+    
+    
     
     
     
@@ -209,29 +227,182 @@ public class UnitTestFrame {
         
     }//method()
     
-    private void iTestWithCuboid(){}
-    private void iTestWithNoCuboid(){}
+    private void iTestWithCuboid(
+        final String testName,
+        final double expectedSurface,
+        final double expectedVolume,
+        final Point expectedCenter,
+        final Point... shapePoints
+    ){
+        assert shapePoints.length==8 : String.format( "internal setup error - 8 points were expected and %d found", shapePoints.length );
+        final Permutationer<Point> permu = new SimplePermutationer<Point>( shapePoints );
+        while(permu.hasNext() ){
+            
+            // local declarations
+            //
+            double computedSurface;
+            double computedVolume;
+            Point computedCenter;
+            //
+            boolean exceptionDetected;
+            String exceptionMessage = "";
+            //
+            final Point[] currentPoints = permu.next();
+            
+            
+            // test cuboid
+            //
+            exceptionDetected = false;
+            Cuboid cuboid = null;
+            try{
+                cuboid = new Cuboid( currentPoints );
+            }catch( final Exception | AssertionError ex ){
+                exceptionDetected = true;
+                exceptionMessage = ex.getMessage();
+            }finally{
+                if( exceptionDetected ){
+                    StringBuilder sb = new StringBuilder( testName );
+                    sb.append( ":\n" );
+                    sb.append( "ERROR: Cuboid was NOT detected  based on :\n" );
+                    sb.append( Arrays.toString( currentPoints ));
+                    sb.append( "\n" );
+                    sb.append( exceptionMessage );
+                    System.out.printf( "%s\n", sb.toString() );
+                    System.out.printf( "\n\n" );
+                    fail( "ERROR: Cuboid was NOT detected" );
+                }//if
+            }//try
+            //
+            computedSurface = cuboid.getSurface();
+            assertTrue( 
+                Math.abs( expectedSurface - computedSurface ) <= epsilon,
+                String.format(
+                    "expected: <%f> but was: <%f>\nPoints: %s\n",
+                    expectedSurface,
+                    computedSurface,
+                    Arrays.toString( currentPoints )
+                )
+            );
+            //
+            computedVolume = cuboid.getVolume();
+            assertTrue(
+                Math.abs( 1.0 - cuboid.getVolume() )  <= epsilon,
+                String.format(
+                    "expected: <%f> but was: <%f>\nPoints: %s\n",
+                    expectedVolume,
+                    computedVolume,
+                    Arrays.toString( currentPoints )
+                )
+            );
+            //
+            computedCenter = cuboid.getCenter();
+            assertTrue(
+                expectedCenter.isAcceptedAsEqual( computedCenter, epsilon ),
+                String.format(
+                    "expected: <%s> but was: <%s>\nPoints: %s\n",
+                    expectedCenter,
+                    computedCenter,
+                    Arrays.toString( currentPoints )
+                )
+             );
+            
+            
+            //test cube
+            //
+            exceptionDetected = false;
+            Cube cube = null;
+            try{
+                cube = new Cube( currentPoints );
+            }catch( final Exception | AssertionError ex ){
+                exceptionDetected = true;
+            }finally{
+                if( ! exceptionDetected ){
+                    StringBuilder sb = new StringBuilder( testName );
+                    sb.append( ":\n" );
+                    sb.append( "ERROR: Cube was detected  based on :\n" );
+                    sb.append( Arrays.toString( currentPoints ));
+                    sb.append( "\n" );
+                    sb.append( exceptionMessage );
+                    System.out.printf( "%s\n", sb.toString() );
+                    System.out.printf( "\n\n" );
+                    fail( "ERROR: Faulty cube was accepted" );
+                }//if
+            }//try
+        }//while
+        
+    }//method()
     
+    private void iTestWithShape(
+            final String testName,
+            final double expectedSurface,
+            final double expectedVolume,
+            final Point expectedCenter,
+            final Point... shapePoints
+        ){
+            assert shapePoints.length==8 : String.format( "internal setup error - 8 points were expected and %d found", shapePoints.length );
+            final Permutationer<Point> permu = new SimplePermutationer<Point>( shapePoints );
+            while(permu.hasNext() ){
+                
+                // local declarations
+                //
+                boolean exceptionDetected;
+                String exceptionMessage = "";
+                //
+                final Point[] currentPoints = permu.next();
+                
+                
+                // test cuboid
+                //
+                exceptionDetected = false;
+                Cuboid cuboid = null;
+                try{
+                    cuboid = new Cuboid( currentPoints );
+                }catch( final Exception | AssertionError ex ){
+                    exceptionDetected = true;
+                    exceptionMessage = ex.getMessage();
+                }finally{
+                    if( exceptionDetected ){
+                        StringBuilder sb = new StringBuilder( testName );
+                        sb.append( ":\n" );
+                        sb.append( "ERROR: Cuboid was detected  based on :\n" );
+                        sb.append( Arrays.toString( currentPoints ));
+                        sb.append( "\n" );
+                        sb.append( exceptionMessage );
+                        System.out.printf( "%s\n", sb.toString() );
+                        System.out.printf( "\n\n" );
+                        fail( "ERROR: Faulty cuboid was accepted" );
+                    }//if
+                }//try
+                
+                
+                //test cube
+                //
+                exceptionDetected = false;
+                Cube cube = null;
+                try{
+                    cube = new Cube( currentPoints );
+                }catch( final Exception | AssertionError ex ){
+                    exceptionDetected = true;
+                }finally{
+                    if( ! exceptionDetected ){
+                        StringBuilder sb = new StringBuilder( testName );
+                        sb.append( ":\n" );
+                        sb.append( "ERROR: Cube was detected  based on :\n" );
+                        sb.append( Arrays.toString( currentPoints ));
+                        sb.append( "\n" );
+                        sb.append( exceptionMessage );
+                        System.out.printf( "%s\n", sb.toString() );
+                        System.out.printf( "\n\n" );
+                        fail( "ERROR: Faulty cube was accepted" );
+                    }//if
+                }//try
+            }//while
+            
+        }//method()    
     
     // Cube
     //@Test
     public void test(){
-        permutate(
-            true,                   // cube expected ?
-            true,                   // cuboid expected ?
-            new Point( +0.0,  +0.0,  +0.0),   new Point( +0.0,  +1.0,  +0.0),   new Point( +0.0,  +0.0,  +1.0),   new Point( +0.0,  +1.0,  +1.0),
-            new Point( +1.0,  +0.0,  +0.0),   new Point( +1.0,  +1.0,  +0.0),   new Point( +1.0,  +0.0,  +1.0),   new Point( +1.0,  +1.0,  +1.0)
-        );
-        //  ( +0.0, +0.0, +0.0 )    "+"    (+1.0, +0.0, +0.0),  (+0.0, +1.0, +0.0),  (+0.0, +0.0, +1.0)
-        
-        // Cube                     (Test#1)
-        permutate(
-            true,                   // cube expected ?
-            true,                   // cuboid expected ?
-            new Point( +0.0,  +0.0,  +0.0),   new Point( +0.0,  +5.0,  +0.0),   new Point( +0.0,  +0.0,  +5.0),   new Point( +0.0,  +5.0,  +5.0),
-            new Point( +5.0,  +0.0,  +0.0),   new Point( +5.0,  +5.0,  +0.0),   new Point( +5.0,  +0.0,  +5.0),   new Point( +5.0,  +5.0,  +5.0)
-        );
-        //  ( +0.0, +0.0, +0.0 )    "+"    (+5.0, +0.0, +0.0),  (+0.0, +5.0, +0.0),  (+0.0, +0.0, +5.0)
         
         // Cube
         permutate(
