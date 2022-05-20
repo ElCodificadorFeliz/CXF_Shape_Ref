@@ -62,18 +62,30 @@ public class UnitTestFrame {
                 new Point( +0.0,  +0.0,  +0.0),   new Point( +0.0,  +1.0,  +0.0),   new Point( +0.0,  +0.0,  +1.0),   new Point( +0.0,  +1.0,  +1.0),
                 new Point( +1.0,  +0.0,  +0.0),   new Point( +1.0,  +1.0,  +0.0),   new Point( +1.0,  +0.0,  +1.0),   new Point( +1.0,  +1.0,  +1.0)
         };
-        assert shapePoints.length==8 : String.format( "internal setup error - 8 points were expected and %d found", shapePoints );
+        final double expectedSurface = 6.0;
+        final double expectedVolume = 1.0;
+        final Point expectedCenter = new Point( 0.5, 0.5, 0.5 );
+        iTestWithCube( testName, expectedSurface, expectedVolume, expectedCenter, shapePoints );
+    }//method()
+    
+    
+    
+    private void iTestWithCube(
+        final String testName,
+        final double expectedSurface,
+        final double expectedVolume,
+        final Point expectedCenter,
+        final Point... shapePoints
+    ){
+        assert shapePoints.length==8 : String.format( "internal setup error - 8 points were expected and %d found", shapePoints.length );
         final Permutationer<Point> permu = new SimplePermutationer<Point>( shapePoints );
         while(permu.hasNext() ){
             
             // local declarations
             //
-            double expectedSurface;
             double computedSurface;
-            double expectedVolume;
             double computedVolume;
             Point computedCenter;
-            Point expectedCenter;
             //
             boolean exceptionDetected;
             String exceptionMessage = "";
@@ -104,17 +116,38 @@ public class UnitTestFrame {
                 }//if
             }//try
             //
-            expectedSurface = 6.0;
             computedSurface = cuboid.getSurface();
-            assertTrue( Math.abs( expectedSurface - computedSurface ) <= epsilon, String.format( "expected: <%f> but was: <%f>", expectedSurface, computedSurface ) );
+            assertTrue( 
+                Math.abs( expectedSurface - computedSurface ) <= epsilon,
+                String.format(
+                    "expected: <%f> but was: <%f>\nPoints: %s\n",
+                    expectedSurface,
+                    computedSurface,
+                    Arrays.toString( currentPoints )
+                )
+            );
             //
-            expectedVolume = 1.0;
             computedVolume = cuboid.getVolume();
-            assertTrue( Math.abs( 1.0 - cuboid.getVolume() )  <= epsilon, String.format( "expected: <%f> but was: <%f>", 1.0, cuboid.getVolume() ) );
+            assertTrue(
+                Math.abs( 1.0 - cuboid.getVolume() )  <= epsilon,
+                String.format(
+                    "expected: <%f> but was: <%f>\nPoints: %s\n",
+                    expectedVolume,
+                    computedVolume,
+                    Arrays.toString( currentPoints )
+                )
+            );
             //
-            expectedCenter = new Point( 0.5, 0.5, 0.5 );
             computedCenter = cuboid.getCenter();
-            assertTrue( expectedCenter.isAcceptedAsEqual( computedCenter, epsilon ), String.format( "expected: <%s> but was: <%s>", expectedCenter, computedCenter ) );
+            assertTrue(
+                expectedCenter.isAcceptedAsEqual( computedCenter, epsilon ),
+                String.format(
+                    "expected: <%s> but was: <%s>\nPoints: %s\n",
+                    expectedCenter,
+                    computedCenter,
+                    Arrays.toString( currentPoints )
+                )
+             );
             
             
             //test cube
@@ -139,22 +172,45 @@ public class UnitTestFrame {
                 }//if
             }//try
             //
-            expectedSurface = 6.0;
             computedSurface = cube.getSurface();
-            assertTrue( Math.abs( expectedSurface - computedSurface ) <= epsilon, String.format( "expected: <%f> but was: <%f>", expectedSurface, computedSurface ) );
+            assertTrue( 
+                Math.abs( expectedSurface - computedSurface ) <= epsilon,
+                String.format(
+                    "expected: <%f> but was: <%f>\nPoints: %s\n",
+                    expectedSurface,
+                    computedSurface,
+                    Arrays.toString( currentPoints )
+                )
+            );
             //
-            expectedVolume = 1.0;
             computedVolume = cube.getVolume();
-            assertTrue( Math.abs( 1.0 - cuboid.getVolume() )  <= epsilon, String.format( "expected: <%f> but was: <%f>", 1.0, cuboid.getVolume() ) );
+            assertTrue(
+                Math.abs( 1.0 - cuboid.getVolume() )  <= epsilon,
+                String.format(
+                    "expected: <%f> but was: <%f>\nPoints: %s\n",
+                    expectedVolume,
+                    computedVolume,
+                    Arrays.toString( currentPoints )
+                )
+            );
             //
-            expectedCenter = new Point( 0.5, 0.5, 0.5 );
             computedCenter = cube.getCenter();
-            assertTrue( expectedCenter.isAcceptedAsEqual( computedCenter, epsilon ), String.format( "expected: <%s> but was: <%s>", expectedCenter, computedCenter ) );
+            assertTrue(
+                expectedCenter.isAcceptedAsEqual( computedCenter, epsilon ),
+                String.format(
+                    "expected: <%s> but was: <%s>\nPoints: %s\n",
+                    expectedCenter,
+                    computedCenter,
+                    Arrays.toString( currentPoints )
+                )
+             );
             
         }//while
+        
     }//method()
     
-    
+    private void iTestWithCuboid(){}
+    private void iTestWithNoCuboid(){}
     
     
     // Cube
