@@ -106,18 +106,14 @@ public class UnitTestFrame {
     public void testWithCubePoints04(){
         final String testName = new Object(){}.getClass().getEnclosingMethod().getName();
         final Point[] shapePoints = {
-            new Point( -10.66,  +6.24,  +6.89),   new Point( -2.86,  -2.86,  -0.91),   new Point( +1.04, +14.04,  +9.49),   new Point(  +8.84,  +4.94,  +1.69),
-            new Point(  -8.06,  -1.56, +18.59),   new Point( -0.26, -10.66, +10.79),   new Point( +3.64,  +6.24, +21.19),   new Point( +11.44,  -2.86, +13.39)
-          //new Point( -8.2,  +4.8,  +5.3),   new Point( -2.2,  -2.2,  -0.7),   new Point( +0.8, +10.8,  +7.3),   new Point( +6.8,  +3.8,  +1.3),
-          //new Point( -6.2,  -1.2, +14.3),   new Point( -0.2,  -8.2,  +8.3),   new Point( +2.8,  +4.8, +16.3),   new Point( +8.8,  -2.2, +10.3)
-          //new Point( -8.3,  +4.9,  +5.3),   new Point( -2.3,  -2.1,  -0.7),   new Point( +0.7, +10.9,  +7.3),   new Point( +6.7,  +3.9,  +1.3),
-          //new Point( -6.3,  -1.1, +14.3),   new Point( -0.3,  -8.1,  +8.3),   new Point( +2.7,  +4.9, +16.3),   new Point( +8.7,  -2.1, +10.3)
+            new Point(  +3.64,  +6.24, +21.19),   new Point(  -8.06,  -1.56, +18.59),   new Point( +11.44,  -2.86, +13.39),   new Point(  -0.26, -10.66, +10.79),
+            new Point(  +1.04, +14.04,  +9.49),   new Point( -10.66,  +6.24,  +6.89),   new Point(  +8.84,  +4.94,  +1.69),   new Point(  -2.86,  -2.86,  -0.91)
         };
         final double expectedSurface = 1226.94;
         final double expectedVolume = 2924.207;
         final Point expectedCenter = new Point( 0.39, 1.69, 10.14 );
         iTestWithCubePoints( testName, expectedSurface, expectedVolume, expectedCenter, shapePoints );
-        //  ...*7
+        //  f(  ( -2.3, -2.1, -0.7 )    "+"    (+9.0, +6.0, +2.0),  (+2.0, -6.0, +9.0),  (-6.0, +7.0, +6.0)  )
     }//method()
     
     
