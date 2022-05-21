@@ -42,10 +42,10 @@ public class Sphere implements Shape {
     public Point getCenter(){ return center; }
     
     @Override
-    public double getSurface(){ return 4.0 * Math.PI * radius*radius; }
+    public double getSurface(){ return Math.PI * radius*radius * 4.0; }
     
     @Override
-    public double getVolume(){ return 4.0/3.0 * Math.PI * radius*radius*radius; }
+    public double getVolume(){ return Math.PI * radius*radius*radius * 4.0/3.0; }
     
     
     @Override
