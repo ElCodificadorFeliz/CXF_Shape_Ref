@@ -388,8 +388,14 @@ public class UnitTestFrame {
     public void testPolymorphy(){
         final String testName = new Object(){}.getClass().getEnclosingMethod().getName();
         final Point[] shapePoints = {
-            new Point( -4.2, -4.2, -4.2),   new Point( -4.2, +4.2, -4.2),   new Point( +4.2, +4.2, -4.2),   new Point( +4.2, -4.2, -4.2),
-            new Point( -4.2, -4.2, +4.2),   new Point( -4.2, +4.2, +4.2),   new Point( +4.2, +4.2, +4.2),   new Point( +4.2, -4.2, +4.2)
+            new Point(  -4.2,   -4.2,   -4.2 ),
+            new Point(  -4.2,   -4.2,   +4.2 ),
+            new Point(  -4.2,   +4.2,   -4.2 ),
+            new Point(  -4.2,   +4.2,   +4.2 ),
+            new Point(  +4.2,   -4.2,   -4.2 ),
+            new Point(  +4.2,   -4.2,   +4.2 ),
+            new Point(  +4.2,   +4.2,   -4.2 ),
+            new Point(  +4.2,   +4.2,   +4.2 )
         };
         final Point center = new Point( -1.0, -1.0,-1.0);
         final double radius = 1.0;
