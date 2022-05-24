@@ -4,6 +4,15 @@ package test.support;
 import java.util.List;
 
 
+/**
+ * ...
+ * 
+ * @author   Michael Schaefers  ([UTF-8]:"Michael Schäfers");
+ *           P1@Hamburg-UAS.eu 
+ * @version {@value #interfaceEncodedVersion}
+ *
+ * @param <T> ...
+ */
 public interface Stack<T> {
     //
     //--VERSION:--------------------------------#---vvvvvvvvv---vvvv-vv-vv--vv

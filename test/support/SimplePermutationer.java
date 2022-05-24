@@ -8,11 +8,18 @@ import java.util.Arrays;
 import java.util.List;
 
 
+/**
+ * The Simple Permutationer supports step by step permutation of a given array.
+ * 
+ * @author   Michael Schaefers  ([UTF-8]:"Michael Schäfers");
+ *           P1@Hamburg-UAS.eu 
+ * @version {@value #encodedVersion}
+ */
 public class SimplePermutationer<T> implements Permutationer<T>,Serializable {
     //
     //--VERSION:-------------------------------#---vvvvvvvvv---vvvv-vv-vv--vv
     //  ========                               #___~version~___YYYY_MM_DD__dd_
-    final static private long encodedVersion = 2___00001_001___2022_05_17__01L;
+    final static private long encodedVersion = 2___00001_001___2022_05_24__01L;
     //-----------------------------------------#---^^^^^-^^^---^^^^-^^-^^--^^
     final static private Version version = new Version( encodedVersion );
   //static public String getDecodedVersion(){ return version.getDecodedVersion(); }

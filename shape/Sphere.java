@@ -70,8 +70,12 @@ public class Sphere implements Shape {
     
     /**
      * TODO ...
+     * 
+     * @param otherObject  ...
+     * @param tolerance  ...
+     * @return  ...
      */
-    public boolean isAcceptedAsEqualEqual( final Object otherObject, final double tolerance ){  // NICHT eingefordert - bewusst andere Schreibweise zur Abgrenzung
+    public boolean isAcceptedAsEqual( final Object otherObject, final double tolerance ){  // NICHT eingefordert - bewusst andere Schreibweise zur Abgrenzung
         assert 0<=tolerance: "Illegal Argument : Negative tolerance is NOT supported";
         //
         if( this==otherObject )  return true;                                   // beide Objekte identisch?
@@ -97,33 +101,10 @@ public class Sphere implements Shape {
     }//method()
     
     @Override
-    public int hashCode(){                                                      // NICHT eingefordert und KRITISCH ! Siehe equals()
+    public int hashCode(){                                                      // NICHT eingefordert
         return Objects.hash( center, radius );
     }//method()
-    
     /*
-    "scheinbar brauchbares" equals() bricht aber contract - Siehe isSimiliar() - dieses equals ist auch NICHT transitiv
-    @Override
-    public boolean equals( final Object otherObject ){                          // NICHT eingefordert
-        if( this==otherObject )  return true;                                   // beide Objekte identisch?
-        if( null==otherObject )  return false;                                  // existiert other?
-        if( getClass()!=otherObject.getClass() )  return false;                 // Class-Objekte identisch?
-        //
-        final Sphere other = (Sphere)( otherObject );
-        final double delta = radius - other.radius;
-        if( delta < -epsilon || epsilon < delta ) return false;                 // Vergleich der Attribute
-        return true;
-    }//method()
-    //
-    @Override
-    public int hashCode(){                                                      // NICHT eingefordert und KRITISCH ! Siehe equals()
-        if( true )  throw new UnsupportedOperationException( "contract broken :  equals()<->hashCode()" );
-        return 42;
-    }//method()
-    
-    
-    
-    "ausgeschriebener" hashCode für unkritisches equals()
     @Override                                                                   // NICHT eingefordert
     public int hashCode() {                                                     
         final int prime = 31;
@@ -131,6 +112,11 @@ public class Sphere implements Shape {
         long temp = Double.doubleToLongBits(radius);
         result = prime * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }//method()
+    //
+    @Override
+    public int hashCode(){                                                      // NICHT eingefordert und KRITISCH(!!!) - waere noetig wenn equals() Rundungsfehler toleriert
+        throw new UnsupportedOperationException( "contract broken :  equals()<->hashCode()" );
     }//method()
     */
     

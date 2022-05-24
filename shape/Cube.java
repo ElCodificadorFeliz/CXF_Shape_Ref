@@ -11,10 +11,10 @@ package shape;
  */
 public class Cube extends Cuboid {
     
-    public Cube( final Point... point ){
+    public Cube( final Point... point ){                                        // Varargs nur optional - NICHT mehr im Pflichtteil - Array ok
         super( point );
-        assert super.edgeLength[0]<=super.edgeLength[1] && super.edgeLength[1]<=super.edgeLength[2] : "internal bug in cuboid class - edgeLength is NOT ordered";
-        assert super.edgeLength[2]-super.edgeLength[0]<Shape.epsilon : "Illegal Argument : valid cube expected, but shape is NOT cube";
+        assert super.sortedEdgeLength[0]<=super.sortedEdgeLength[1] && super.sortedEdgeLength[1]<=super.sortedEdgeLength[2] : "internal bug in cuboid class - edgeLength is NOT ordered";
+        assert super.sortedEdgeLength[2]-super.sortedEdgeLength[0]<Shape.epsilon : "Illegal Argument : valid cube expected, but shape is NOT cube";
     }//constructor()
     
     
@@ -36,7 +36,7 @@ public class Cube extends Cuboid {
     
     // NICHT eingefordert !!! vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
     
-    static public boolean isValid( final Point... point ){
+    static public boolean isValid( final Point... point ){                      // Varargs nur optional - NICHT mehr im Pflichtteil - Array ok
         final double[] lineLength = Cuboid.computeLineLength( point );
         return lineLength[11]-lineLength[ 0] <= epsilon
             && lineLength[23]-lineLength[12] <= epsilon

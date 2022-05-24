@@ -3,10 +3,13 @@ package test.support;
 
 
 /**
+ * A Permutationer supports step by step permutation of a given array.
  * 
- * @author ...
+ * @author   Michael Schaefers  ([UTF-8]:"Michael Schäfers");
+ *           P1@Hamburg-UAS.eu 
+ * @version  2022/05/17 (#1)
  *
- * @param <T>
+ * @param <T>  ...
  */
 public interface Permutationer<T> {
     

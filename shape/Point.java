@@ -11,11 +11,11 @@ import java.util.Objects;
  * 
  * @author   Michael Schaefers  ([UTF-8]:"Michael Schäfers");
  *           P1@Hamburg-UAS.eu 
- * @version  2022/05/17 (#1)
+ * @version  2022/05/24 (#1)
  */
 public class Point {
     
-    final double[] dim;
+    final double[] dim;                                                         // package scope on purpose - alien childs are not supported
     
     
     
@@ -26,7 +26,7 @@ public class Point {
      * 
      * @param dim  ...
      */
-    public Point( final double... dim ){
+    public Point( final double... dim ){                                        // Varargs nur optional - NICHT mehr im Pflichtteil- Array ok
         assert dim.length == 3 : "Illegal Argument : 3 dimensions are expected";
         this.dim = dim;
     }//constructor()
@@ -86,7 +86,7 @@ public class Point {
     }//method()
     //
     @Override
-    public int hashCode(){                                                      // NICHT eingefordert und KRITISCH ! Siehe equals()
+    public int hashCode(){                                                      // NICHT eingefordert
         return Objects.hash( dim );
     }//method()
     

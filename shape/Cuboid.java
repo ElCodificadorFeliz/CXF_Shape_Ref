@@ -10,24 +10,24 @@ import java.util.Arrays;
  * 
  * @author   Michael Schaefers  ([UTF-8]:"Michael Schäfers");
  *           P1@Hamburg-UAS.eu 
- * @version  2022/05/17 (#1)
+ * @version  2022/05/24 (#1)
  */
 public class Cuboid implements Shape {
     
-    protected final Point[] point;
+    final Point[] point;                                                        // package scope on purpose - alien childs are not supported
     
     // edgeLength ist NICHT eingefordert, macht es aber angenehmer
     // Studenten muessen "jetzt" nur private und public beherrschen
-    protected double[] edgeLength;                                              // protected on purpose - needed in sub classes
+    final double[] sortedEdgeLength;                                            // package scope on purpose - alien childs are not supported
     
     
     
     
     
     // Konstruktor liegt Annahme zugrund, dass Koerper statisch sind - sich also nicht ueber die Zeit veraendern
-    public Cuboid( final Point... point ){
+    public Cuboid( final Point... point ){                                      // Varargs nur optional - NICHT mehr im Pflichtteil- Array ok
         assert point.length==8 : String.format( "Illegal Argument : 8 points were expected and %d received", point.length );
-        final double[] lineLength = Cuboid.computeLineLength( point );
+        final double[] lineLength = Cuboid.iComputeLineLength( point );
         assert Cuboid.isValid( lineLength ) : "Illegal Argument : valid cuboid expected, but shape is NOT cuboid";
         
         this.point = point;
@@ -38,7 +38,7 @@ public class Cuboid implements Shape {
             z = lineLength[12];                                                 // "Die Alternative" ist dann die 3.Kante
         }//if
         
-        edgeLength = new double[]{ x,y,z };
+        sortedEdgeLength = new double[]{ x,y,z };
     }//constructor()
     
     
@@ -57,12 +57,14 @@ public class Cuboid implements Shape {
     
     @Override
     public double getSurface(){
-        return 2*(edgeLength[0]*edgeLength[1] + edgeLength[0]*edgeLength[2] + edgeLength[1]*edgeLength[2] );
+        return 2*(sortedEdgeLength[0]*sortedEdgeLength[1]
+                + sortedEdgeLength[0]*sortedEdgeLength[2]
+                + sortedEdgeLength[1]*sortedEdgeLength[2] );
     }//method()
     
     @Override
     public double getVolume(){
-        return edgeLength[0]*edgeLength[1]*edgeLength[2];
+        return sortedEdgeLength[0]*sortedEdgeLength[1]*sortedEdgeLength[2];
     }//method()
         
     
@@ -71,7 +73,7 @@ public class Cuboid implements Shape {
         return String.format(
             "[<%s>: edgeLength=%s; point=%s]",
             Cuboid.class.getSimpleName(),
-            Arrays.toString( edgeLength ),
+            Arrays.toString( sortedEdgeLength ),
             Arrays.toString( point )
         );
     }//method()
@@ -89,7 +91,7 @@ public class Cuboid implements Shape {
     }//method()
     //
     // "isValid" is subfunction of "isValid" and requires sorted array as parameter
-    static private boolean isValid( final double[] lineLength ){                // private on purpose
+    static private boolean isValid( final double[] lineLength ){                // private on purpose - used by constructor
         assert lineLength.length==28 : String.format( "invalid parameter - 28 line length were expected and %d received", lineLength.length );
         return ( lineLength[ 3]-lineLength[ 0] <= epsilon )                     // "1.Kante"
             && ( lineLength[ 7]-lineLength[ 4] <= epsilon )                     // "2.Kante"
@@ -100,7 +102,11 @@ public class Cuboid implements Shape {
             && ( lineLength[27]-lineLength[24] <= epsilon );                    // Raumdiagonale
     }//method()
     //
-    static protected double[] computeLineLength( final Point... point ){        // protected on purpose
+    static double[] computeLineLength( final Point... point ){                  // package scope on purpose - alien childs are not supported
+        return iComputeLineLength( point );
+    }//method()
+    //
+    static private double[] iComputeLineLength( final Point... point ){         // private on purpose - used by constructor
         assert point.length==8 : String.format( "invalid parameter - 8 points were expected and %d received", point.length );
         int i = 0;
         double[] lineLength = new double[28];
@@ -109,7 +115,7 @@ public class Cuboid implements Shape {
                 lineLength[i++] = Math.sqrt(  Math.pow( point[j].dim[0]-point[k].dim[0], 2)
                                             + Math.pow( point[j].dim[1]-point[k].dim[1], 2)
                                             + Math.pow( point[j].dim[2]-point[k].dim[2], 2)
-                                  );
+                );
             }//for
         }//for
         Arrays.sort( lineLength );
@@ -119,24 +125,20 @@ public class Cuboid implements Shape {
     
     
     
-    public boolean isValid(){
+    public boolean isValid(){                                                   // Sollte gar nicht noetig sein, da Konstruktor "falsche" Objekte verhindert
         return Cuboid.isValid( computeLineLength( point ) );
     }//method()
     
     
     @Override
     public boolean equals( final Object otherObject ){
-        if( this==otherObject )  return true;                       // beide Objekte identisch?
-        if( null==otherObject )  return false;                      // existiert other?
-        if( getClass()!=otherObject.getClass() )  return false;     // Class-Objekte identisch?
+        if( this==otherObject )  return true;
+        if( null==otherObject )  return false;
+        if( getClass()!=otherObject.getClass() )  return false;
         //
         final Cuboid other = (Cuboid)( otherObject );
         for( int i=0; i<point.length; i++ ){
-            if( point[i].dim.length != other.point[i].dim.length )  return false;
-            for( int d=0; d<point[i].dim.length; d++ ){
-                final double delta = point[i].dim[d] - other.point[i].dim[d];
-                if( delta < -epsilon || epsilon < delta ) return false; // Vergleich der Attribute
-            }//for
+            if( ! point[i].isAcceptedAsEqual( other.point[i], epsilon ))   return false;
         }//for
         return true;
     }//method()

@@ -1,12 +1,14 @@
 package test;
 
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static shape.Shape.epsilon;
 
 import java.util.*;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -19,16 +21,13 @@ import shape.Sphere;
 import test.support.Permutationer;
 import test.support.SimplePermutationer;
 
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-
-
-
 
 /**
  * UnitTestFrame : ...
  * 
- * @author   Michael Schäfers ; P1@Hamburg-UAS.eu 
- * @version  2015/11/13
+ * @author   Michael Schaefers  ([UTF-8]:"Michael Schäfers");
+ *           P1@Hamburg-UAS.eu 
+ * @version  2022/05/24 (#1)
  */
 @TestMethodOrder(OrderAnnotation.class)
 public class UnitTestFrame {
@@ -39,7 +38,7 @@ public class UnitTestFrame {
         System.out.printf( "=====================\n" );
         System.out.printf( "\n\n" );
         System.out.printf( "Release:\n" );
-        System.out.printf( "    2022/05/21\n" );
+        System.out.printf( "    2022/05/24\n" );
         System.out.printf( "\n\n\n\n" );
         System.out.printf( "Start of actual tests\n" );
         System.out.printf( "=====================\n" );
@@ -490,7 +489,7 @@ public class UnitTestFrame {
             //
             computedSurface = cuboid.getSurface();
             assertTrue( 
-                Math.abs( expectedSurface - computedSurface ) <= epsilon,
+                areAcceptedAsEqualFloatingPointValues( expectedSurface, computedSurface, epsilon ),
                 String.format(
                     "expected surface: <%f> but was: <%f>\nPoints: %s\n",
                     expectedSurface,
@@ -501,7 +500,7 @@ public class UnitTestFrame {
             //
             computedVolume = cuboid.getVolume();
             assertTrue(
-                Math.abs( expectedVolume - computedVolume )  <= epsilon,
+                areAcceptedAsEqualFloatingPointValues( expectedVolume, computedVolume, epsilon ),
                 String.format(
                     "expected volume: <%f> but was: <%f>\nPoints: %s\n",
                     expectedVolume,
@@ -547,7 +546,7 @@ public class UnitTestFrame {
             //
             computedSurface = cube.getSurface();
             assertTrue( 
-                Math.abs( expectedSurface - computedSurface ) <= epsilon,
+                areAcceptedAsEqualFloatingPointValues( expectedSurface, computedSurface, epsilon ),
                 String.format(
                     "expected surface: <%f> but was: <%f>\nPoints: %s\n",
                     expectedSurface,
@@ -558,7 +557,7 @@ public class UnitTestFrame {
             //
             computedVolume = cube.getVolume();
             assertTrue(
-                Math.abs( expectedVolume - computedVolume )  <= epsilon,
+                areAcceptedAsEqualFloatingPointValues( expectedVolume, computedVolume, epsilon ),
                 String.format(
                     "expected volume: <%f> but was: <%f>\nPoints: %s\n",
                     expectedVolume,
@@ -632,7 +631,7 @@ public class UnitTestFrame {
             //
             computedSurface = cuboid.getSurface();
             assertTrue( 
-                Math.abs( expectedSurface - computedSurface ) <= epsilon,
+                areAcceptedAsEqualFloatingPointValues( expectedSurface, computedSurface, epsilon ),
                 String.format(
                     "expected surface: <%f> but was: <%f>\nPoints: %s\n",
                     expectedSurface,
@@ -643,7 +642,7 @@ public class UnitTestFrame {
             //
             computedVolume = cuboid.getVolume();
             assertTrue(
-                Math.abs( expectedVolume - cuboid.getVolume() )  <= epsilon,
+                areAcceptedAsEqualFloatingPointValues( expectedVolume, computedVolume, epsilon ),
                 String.format(
                     "expected volume: <%f> but was: <%f>\nPoints: %s\n",
                     expectedVolume,
@@ -795,7 +794,7 @@ public class UnitTestFrame {
         //
         final double computedSurface = sphere.getSurface();
         assertTrue( 
-            Math.abs( expectedSurface - computedSurface ) <= epsilon,
+            areAcceptedAsEqualFloatingPointValues( expectedSurface, computedSurface, epsilon ),
             String.format(
                 "expected surface: <%f> but was: <%f>\n",
                 expectedSurface,
@@ -805,7 +804,7 @@ public class UnitTestFrame {
         //
         final double computedVolume = sphere.getVolume();
         assertTrue(
-            Math.abs( expectedVolume - computedVolume )  <= epsilon,
+            areAcceptedAsEqualFloatingPointValues( expectedVolume, computedVolume, epsilon ),
             String.format(
                 "expected volume: <%f> but was: <%f>\n",
                 expectedVolume,
@@ -854,6 +853,14 @@ public class UnitTestFrame {
                 fail( "ERROR: Faulty Sphere was accepted" );
             }//if
         }//try
+    }//method()
+    
+    
+    
+    private static boolean areAcceptedAsEqualFloatingPointValues( final double d1,  final double d2,  final double tolerance ){
+        assert 0<=tolerance : "Illegal Argument : Negative tolerance is NOT supported";
+        
+        return Math.abs( d1 - d2 ) <= tolerance;
     }//method()
     
 }//class
