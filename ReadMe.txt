@@ -7,8 +7,8 @@
 ###--------------------///^^^\\\--------------------
 ################################################################################
 ###
-###     P1 :  Shape
-###     ===========
+###     C-F :  Shape
+###     ============
 ###
 
 
@@ -55,14 +55,15 @@ Quader und dann ein Oberfläche um 90° verdrehen
 
 History
 =======
-06/#14  SS22     (AI1  P1 AZ#5) Z5.1        git@git.HAW-Hamburg.de:shf/Px/LabExercise/CXF_Shape_Ref                         Eclipse 22-03 (4.23.x) ,  (Eclipse)Temurin / (Adopt)OpenJDK 17.0.3+7
-08/#09  WS15/16  (TI1  P1 AZ#4) A4.2        bitbucket.org/schaefers/P1_A4x2_BlueJ_Pilot                                     1.Pilot mit BlueJ (spätere "Aufgabenposition" unklar)
-07/#08  SS14     (TI1  P1 AZ#3) A8          bitbucket.org/schaefers/AZ3-A8
-06/#07  WS12/13  (TI1  P1 AZ#3) A7
-05/#06  WS11/12  (TI1  P1 AZ#3) A7
-04/#05  WS10/11  (TI1  P1 AZ#3) A7
-03/#04  WS09/10  (TI1  P1 AZ#3) A7
-02/#03  WS08/09  (TI1  P1 AZ#3) A7
-01/#02  WS07/08  (TI1  P1 AZ#3) A5                                                                                          Idee/Ziel: Irgendetwas einfaches mit Klassen, Konstruktoren, Methoden & Vererbung
-......  .......  ...................        ..........................................................................      ...
-Zyklus  Semester Aufgabe                    VCS
+07/#15  s23s  ITS1 P1 AZ#5: Z5.1            git@github.com:ElCodificadorFeliz/CXZ_Thingy                                    Eclipse 23-03 (4.27.x) ,  (Eclipse)Temurin / (Adopt)OpenJDK 17.0.7+7
+06/#14  s22s  AI1  P1 AZ#5: Z5.1            git@git.HAW-Hamburg.de:shf/Px/LabExercise/CXF_Shape_Ref                         Eclipse 22-03 (4.23.x) ,  (Eclipse)Temurin / (Adopt)OpenJDK 17.0.3+7
+08/#09  s15w  TI1  P1 AZ#4: A4.2            bitbucket.org/schaefers/P1_A4x2_BlueJ_Pilot                                     1.Pilot mit BlueJ (spätere "Aufgabenposition" unklar)
+07/#08  s14s  TI1  P1 AZ#3: A8              bitbucket.org/schaefers/AZ3-A8
+06/#07  s12w  TI1  P1 AZ#3: A7
+05/#06  s11w  TI1  P1 AZ#3: A7
+04/#05  s10w  TI1  P1 AZ#3: A7
+03/#04  s09w  TI1  P1 AZ#3: A7
+02/#03  s08w  TI1  P1 AZ#3: A7
+01/#02  s07w  TI1  P1 AZ#3: A5                                                                                              Idee/Ziel: Irgendetwas einfaches mit Klassen, Konstruktoren, Methoden & Vererbung
+......  ....  ...................           ............................................................                    ..........
+Zyklus  Semester    Aufgabe                 VCS                                                                             IDE & Java
