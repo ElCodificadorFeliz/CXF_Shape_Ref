@@ -1,17 +1,16 @@
 // This source code is UTF-8 coded - see https://stackoverflow.com/questions/9180981/how-to-support-utf-8-encoding-in-eclipse
-// "Home"-VCS:  git@git.HAW-Hamburg.de:shf/Px/LabExercise/ZZZ_SupportStuff[.git]
-package test.support;
+// "Home"-VCS: git@git.HAW-Hamburg.de:shf/Px/LabExercise/ZZZ_SupportStuff[.git]
+package stuffBeginnersDontHaveToUnderstand;
 
 
 import java.io.Serializable;
 
 
 /**
- * The single purpose of the class {@link Version} is to hold the &quot;code version&quot; of the class
- * where it is aggregated.<br />
+ * The single purpose of the class {@link Version} is to hold the &quot;code version&quot;.<br />
  * <br />
  * <code>
- * Coding/format of (Given) Code Version<br />
+ * Coding/format for (code) version<br />
  * &nbsp;&nbsp;c: coding format<br />
  * &nbsp;&nbsp;m: main version<br />
  * &nbsp;&nbsp;s: sub version<br />
@@ -27,61 +26,71 @@ import java.io.Serializable;
  * &nbsp;&nbsp;e.g.&nbsp;&nbsp;                     2___00001_014___2021_11_20__01
  * <code />
  * 
- * @version {@value #version}
- * @author  Michael Schaefers ([UTF-8]:"Michael Schäfers");  Px@Hamburg-UAS.eu 
+ * @author  Michael Schaefers  ([UTF-8]:"Michael Schäfers");
+ *          Px@Hamburg-UAS.eu 
+ * @version {@value #encodedV2} 
  */
 public class Version implements Serializable {
-    
-    //  VERSION of "Version-class"              #---vvvvvvvvv---vvvv-vv-vv--vv
-    //  =======                                 #___~version~___YYYY_MM_DD__dd_
-    final static private long ownClassVersion = 2___00001_001___2021_12_10__01L;
-    //                                          #---^^^^^-^^^---^^^^-^^-^^--^^
+    //
+    //--VERSION:--(of "Version-class" itself)--#---vvvvvvvvv---vvvv-vv-vv--vv
+    //  ========                               #___~version~___YYYY_MM_DD__dd_
+    final static private long encodedV2 =      2___00002_009___2023_04_18__01L; // "V2" ::= V^2 = (class) Version Version  resp. Version of the class Version
+    //-----------------------------------------#---^^^^^-^^^---^^^^-^^-^^--^^
+    //
+    static {
+        assert isCodingValid( encodedV2 ) : "setup error : faulty version number coded";  // we are all humans - check that "leading one" has NOT got lost
+    }//static block resp. "static initializer" ~ "class-constructor()"
     //
     private static boolean isCodingValid( final long version ){
         final int leadingDigit = (int)( version / 1__000_000__000_000__000_000L );
         return 1<=leadingDigit && leadingDigit<=2;
     }//method(()
     //
-    static {
-        assert isCodingValid( ownClassVersion ) : "setup error : faulty version number coded";  // we are all humans - check that "leading one" has NOT get lost
-    }//static block resp. "static initializer" ~ "class-constructor()"
-    
-    private static final long serialVersionUID = ownClassVersion;
-    
-    
-    
-    
-    
+    final static private Version version = new Version( encodedV2 );
     /**
-     * The encoded version number
+     * The method {@link #getDecodedVersion()} delivers the code version as reground/readable String.
+     * @return version as decoded/readable String.
      */
-    private final long encodedVersionNumber;
+    static public String getDecodedV2(){ return version.getDecodedVersion(); }
+    // Obiges (ab VERSION) dient nur der Versionierung.
+    
+    // serial version unique ID is based on given code version
+    private static final long serialVersionUID = encodedV2;
+    
+    
     
     
     
     /**
-     * The constructor checks given version number if correctly coded and stores it
+     * The encoded (client) version for some "other" class
+     */
+    private final long encodedVersion;
+    
+    
+    
+    /**
+     * The constructor checks given (client) version number if correctly coded and stores it
      * 
-     * @param encodedVersionNumber  the encoded version number
+     * @param encodedVersion  the encoded (client) version number
      */
-    public Version( final long encodedVersionNumber ){
-        if( ! isCodingValid( encodedVersionNumber )){ throw new IllegalArgumentException( "Faulty coding of version"); }
-        this.encodedVersionNumber = encodedVersionNumber;
+    public Version( final long encodedVersion ){
+        if( ! isCodingValid( encodedVersion )){ throw new IllegalArgumentException( "Faulty coding of version"); }
+        this.encodedVersion = encodedVersion;
     }//constructor()
     
     
     
     /**
-     * The method {@link #getVersionNumber()} delivers the project version.
+     * The method {@link #getVersionNumber()} delivers the encoded (client) version number.
      * 
      * @return version
      */
-    public long getVersionNumber(){
-        return encodedVersionNumber;
+    public long getEncodedVersion(){
+        return encodedVersion;
     }//method()
     
     /**
-     * The method {@link #getDecodedVersion()} delivers the given code version as
+     * The method {@link #getDecodedVersion()} delivers the given (client) code version as
      * reground/readable String.
      * 
      * @return version as decoded/readable String.
@@ -94,8 +103,8 @@ public class Version implements Serializable {
         int day = 0;
         int dailyVersion = 0;
         //
-        long tmp = encodedVersionNumber;
-        final int leadingDigit = (int)( encodedVersionNumber / 1__000_000__000_000__000_000L );
+        long tmp = encodedVersion;
+        final int leadingDigit = (int)( encodedVersion / 1__000_000__000_000__000_000L );
         switch( leadingDigit ){
             //  _1___mmmm_sss___YYYY_MM_DD__ddd
             case 1:
@@ -141,13 +150,13 @@ public class Version implements Serializable {
         sb.append( "." );
         sb.append( String.format( "%03d", subVersion ));
         sb.append( "   ( " );
-        sb.append( Long.toString( year ));
+        sb.append( String.format( "%04d", year ));
         sb.append( "/" );
-        sb.append( Long.toString( month ));
+        sb.append( String.format( "%02d", month ));
         sb.append( "/" );
-        sb.append( Long.toString( day ));
+        sb.append( String.format( "%02d", day ));
         sb.append( " [#" );
-        sb.append( Long.toString( dailyVersion ));
+        sb.append( String.format( "%d", dailyVersion ));
         sb.append( "] )" );
         return sb.toString();
     }//method()

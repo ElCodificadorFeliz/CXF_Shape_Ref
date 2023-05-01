@@ -1,25 +1,18 @@
-package test.support;
+// This source code is UTF-8 coded - see https://stackoverflow.com/questions/9180981/how-to-support-utf-8-encoding-in-eclipse
+// "Home"-VCS: git@git.HAW-Hamburg.de:shf/Px/LabExercise/ZZZ_SupportStuff[.git]
+package stuffBeginnersDontHaveToUnderstand;
 
 
 import java.util.List;
 
 
-/**
- * ...
- * 
- * @author   Michael Schaefers  ([UTF-8]:"Michael Schäfers");
- *           P1@Hamburg-UAS.eu 
- * @version {@value #interfaceEncodedVersion}
- *
- * @param <T> ...
- */
 public interface Stack<T> {
     //
     //--VERSION:--------------------------------#---vvvvvvvvv---vvvv-vv-vv--vv
     //  ========                                #___~version~___YYYY_MM_DD__dd_
-    final static long interfaceEncodedVersion = 2___00001_000___2022_05_17__01L;
+    final static long encodedInterfaceVersion = 2___00001_000___2022_05_17__01L;
     //------------------------------------------#---^^^^^-^^^---^^^^-^^-^^--^^
-    final static Version interfaceVersion = new Version( interfaceEncodedVersion );
+    final static Version stackInterfaceVersion = new Version( encodedInterfaceVersion );
     
     
     

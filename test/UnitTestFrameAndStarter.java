@@ -1,48 +1,88 @@
+// This source code is UTF-8 coded - see https://stackoverflow.com/questions/9180981/how-to-support-utf-8-encoding-in-eclipse
 package test;
 
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static shape.Shape.epsilon;
-
+//
 import java.util.*;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-
 import shape.Cube;
 import shape.Cuboid;
 import shape.Point;
 import shape.Shape;
 import shape.Sphere;
-import test.support.Permutationer;
-import test.support.SimplePermutationer;
+import stuffBeginnersDontHaveToUnderstand.EnvironmentAnalyzer;
+import stuffBeginnersDontHaveToUnderstand.GivenCodeVersion;
+import stuffBeginnersDontHaveToUnderstand.Permutationer;
+import stuffBeginnersDontHaveToUnderstand.SimplePermutationer;
+import stuffBeginnersDontHaveToUnderstand.Version;
 
 
 /**
- * UnitTestFrame : ...
+ * (J)UnitTestFrame for ... - see task
  * 
- * @author   Michael Schaefers  ([UTF-8]:"Michael Schäfers");
- *           P1@Hamburg-UAS.eu 
- * @version  2022/05/24 (#1)
+ * @author  Michael Schaefers  ([UTF-8]:"Michael Schäfers");
+ *          Px@Hamburg-UAS.eu
+ * @version {@value #encodedVersion}
  */
 @TestMethodOrder(OrderAnnotation.class)
-public class UnitTestFrame {
+public class UnitTestFrameAndStarter {
+    //
+    //--VERSION:-------------------------------#---vvvvvvvvv---vvvv-vv-vv--vv
+    //  ========                               #___~version~___YYYY_MM_DD__dd_
+    final static private long encodedVersion = 2___00001_002___2023_05_01__01L;
+    //-----------------------------------------#---^^^^^-^^^---^^^^-^^-^^--^^
+    final static private Version version = new Version( encodedVersion );
+    /**
+     * Get decoded version of code {@link TestFrameAutomated}
+     * 
+     * @return decoded version
+     */
+    static public String getDecodedVersion(){ return version.getDecodedVersion(); }
+    // Obiges (ab VERSION) dient nur der Versionierung.
+    
+    
+    
+    
     
     @BeforeAll
-    public static void init(){
+    public static void runSetupBeforeAnyUnitTestStarts(){
+        
+        // print some information at start
         System.out.printf( "TestFrame information\n" );
         System.out.printf( "=====================\n" );
         System.out.printf( "\n\n" );
+        //
         System.out.printf( "Release:\n" );
-        System.out.printf( "    2022/05/24\n" );
+        System.out.printf( "    GivenCode version:      %s\n",  GivenCodeVersion.getDecodedVersion() );
+        System.out.printf( "    TestFrame version:      %s\n",  version.getDecodedVersion() );
+        System.out.printf( "\n\n" );
+        //
+        System.out.printf( "Environment:\n" );
+        System.out.printf( "    #Cores:                 %d\n",  EnvironmentAnalyzer.getAvailableCores() );
+        System.out.printf( "    Java:                   %s\n",  EnvironmentAnalyzer.getJavaVersion() );
+        System.out.printf( "    JUnit5/Jupiter:         %s\n",  EnvironmentAnalyzer.getJUnitJupiterVersion() );
+        System.out.printf( "    JUnit5/Platform:        %s\n",  EnvironmentAnalyzer.getJUnitPlatformVersion() );
+        System.out.printf( "    assert enabled?:        %s\n",  EnvironmentAnalyzer.isAssertEnabled() );
+        System.out.printf( "    UTF-8 configured?:      %s      <- check output\n",  "[ÄËÏÖÜẞäëïöüß␣🙂😉🙁😟😓😎☠]" );
         System.out.printf( "\n\n\n\n" );
+        //
+        System.out.printf( "################################################################################" );
+        System.out.printf( "\n" );
         System.out.printf( "Start of actual tests\n" );
         System.out.printf( "=====================\n" );
+        System.out.printf( "Remember: The main point is the \"green bar\" (in the JUnit-window)\n" );
+        System.out.printf( "This test will take some time\n" );
         System.out.printf( "\n" );
+        //
         System.out.flush();
     }//method()    
     
@@ -441,12 +481,29 @@ public class UnitTestFrame {
     
     
     
+    @AfterAll
+    public static void tearDownAfterAllUnitTestsHaveFinished(){
+        System.out.printf( "\n" );
+        System.out.printf( "################################################################################\n" );
+        System.out.printf( "THE END" );
+        System.out.flush();
+    }//method()
+    
+    
+    
+    
+    
+    //##########################################################################
+    //###
+    //###   "Helpers" / auxiliary methods
+    //###
+    
     private void iTestWithCubePoints(
         final String testName,
         final double expectedSurface,
         final double expectedVolume,
         final Point expectedCenter,
-        final Point... shapePoints
+        final Point[] shapePoints
     ){
         assert shapePoints.length==8 : String.format( "internal setup error - 8 points were expected and %d found", shapePoints.length );
         final Permutationer<Point> permu = new SimplePermutationer<Point>( shapePoints );

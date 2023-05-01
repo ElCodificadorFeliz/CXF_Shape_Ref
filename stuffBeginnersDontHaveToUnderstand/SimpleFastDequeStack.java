@@ -1,5 +1,6 @@
 // This source code is UTF-8 coded - see https://stackoverflow.com/questions/9180981/how-to-support-utf-8-encoding-in-eclipse
-package test.support;
+// "Home"-VCS: git@git.HAW-Hamburg.de:shf/Px/LabExercise/ZZZ_SupportStuff[.git]
+package stuffBeginnersDontHaveToUnderstand;
 
 
 import java.io.Serializable;
@@ -23,11 +24,11 @@ public class SimpleFastDequeStack<T> implements Stack<T>, Serializable {
     //
     //--VERSION:-------------------------------#---vvvvvvvvv---vvvv-vv-vv--vv
     //  ========                               #___~version~___YYYY_MM_DD__dd_
-    final static private long encodedVersion = 2___00001_001___2022_05_17__01L;
+    final static private long encodedVersion = 2___00001_002___2023_03_08__01L;
     //-----------------------------------------#---^^^^^-^^^---^^^^-^^-^^--^^
     final static private Version version = new Version( encodedVersion );
   //static public String getDecodedVersion(){ return version.getDecodedVersion(); }
-    final static private long serialVersionUID = version.getVersionNumber();
+    final static private long serialVersionUID = version.getEncodedVersion();
     
     
     

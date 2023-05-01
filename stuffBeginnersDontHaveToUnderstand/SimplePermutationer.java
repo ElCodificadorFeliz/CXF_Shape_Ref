@@ -1,5 +1,6 @@
 // This source code is UTF-8 coded - see https://stackoverflow.com/questions/9180981/how-to-support-utf-8-encoding-in-eclipse
-package test.support;
+// "Home"-VCS: git@git.HAW-Hamburg.de:shf/Px/LabExercise/ZZZ_SupportStuff[.git]
+package stuffBeginnersDontHaveToUnderstand;
 
 
 import java.io.Serializable;
@@ -8,22 +9,15 @@ import java.util.Arrays;
 import java.util.List;
 
 
-/**
- * The Simple Permutationer supports step by step permutation of a given array.
- * 
- * @author   Michael Schaefers  ([UTF-8]:"Michael Schäfers");
- *           P1@Hamburg-UAS.eu 
- * @version {@value #encodedVersion}
- */
 public class SimplePermutationer<T> implements Permutationer<T>,Serializable {
     //
     //--VERSION:-------------------------------#---vvvvvvvvv---vvvv-vv-vv--vv
     //  ========                               #___~version~___YYYY_MM_DD__dd_
-    final static private long encodedVersion = 2___00001_001___2022_05_24__01L;
+    final static private long encodedVersion = 2___00002_001___2023_05_01__01L;
     //-----------------------------------------#---^^^^^-^^^---^^^^-^^-^^--^^
     final static private Version version = new Version( encodedVersion );
   //static public String getDecodedVersion(){ return version.getDecodedVersion(); }
-    final static private long serialVersionUID = version.getVersionNumber();
+    final static private long serialVersionUID = version.getEncodedVersion();
     
     
     
@@ -55,6 +49,8 @@ public class SimplePermutationer<T> implements Permutationer<T>,Serializable {
     
     
     
+  //final private T[] unpermutatedOriginal;
+    
     final private Stack<ElemInfo> coreState;
     
     private T[] currentPermutation; 
@@ -73,15 +69,16 @@ public class SimplePermutationer<T> implements Permutationer<T>,Serializable {
         assert  2<=permutable.length : "Illegal Argument : At least 2 array elements are required for actual permutation";
         assert 12>=permutable.length : "Illegal Argument : Max. number of array elements allowed is 12 for permutation - consider computation time!";
         
-        currentPermutation = Arrays.copyOf( permutable, permutable.length );    //(T[])( new Object[permutable.length] );
+      //unpermutatedOriginal = permutable;                                      // original is NOT needed
+        currentPermutation = Arrays.copyOf( permutable, permutable.length );
+      //for( int i=permutable.length; --i>=0; )  currentPermutation[i] = null;  // clearing is NOT necessary
         
         numberOfPermutationsStillToDo = facu( permutable.length );
         
         coreState = new SimpleFastDequeStack<ElemInfo>();
         
         T elem = permutable[0];
-      //currentPermutation[0] = elem;   // for array generation : currentPermutation = Arrays.copyOf( permutable, permutable.length );
-        assert currentPermutation[0] == elem : "internal error";
+        currentPermutation[0] = elem;
         int localIndex = 0;
         List<Integer> localToDoList = new ArrayList<Integer>();
         for( int posi=0; posi<permutable.length; posi++ ) localToDoList.add( posi );
@@ -96,8 +93,7 @@ public class SimplePermutationer<T> implements Permutationer<T>,Serializable {
             //
             //localIndex gets new view
             elem = permutable[i];
-          //currentPermutation[i] = elem;      // for array generation : currentPermutation = Arrays.copyOf( permutable, permutable.length );
-            assert currentPermutation[i] == elem : "internal error";
+            currentPermutation[i] = elem;
             localIndex = 0;
             ei = new ElemInfo( elem, localIndex, localToDoList );
             coreState.push( ei );
@@ -169,5 +165,14 @@ public class SimplePermutationer<T> implements Permutationer<T>,Serializable {
         for( int i=number; i>=2; i-- )  resu *= i;
         return resu;
     }//method()
+    
+    /*
+    private void dbgPrintCoreState(){
+        while( ! coreState.isEmpty() ){
+            final ElemInfo ei = coreState.pop();
+            System.out.printf( "%s\n",  ei );
+        }//while
+    }//method()
+    */
     
 }//class
