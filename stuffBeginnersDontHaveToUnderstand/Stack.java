@@ -6,13 +6,29 @@ package stuffBeginnersDontHaveToUnderstand;
 import java.util.List;
 
 
-public interface Stack<T> {
+/**
+ * Das Interface {@link Stack} .. - see task
+ * 
+ * @param <T>  ...
+ * 
+ * 
+ * @author  Michael Schaefers  ([UTF-8]:"Michael Schäfers");
+ *          Px@Hamburg-UAS.eu
+ * @version {@value #encodedInterfaceVersion}
+ */
+public interface Stack<T> {                                                     // <=> abstract
     //
-    //--VERSION:--------------------------------#---vvvvvvvvv---vvvv-vv-vv--vv
-    //  ========                                #___~version~___YYYY_MM_DD__dd_
-    final static long encodedInterfaceVersion = 2___00001_000___2022_05_17__01L;
-    //------------------------------------------#---^^^^^-^^^---^^^^-^^-^^--^^
-    final static Version stackInterfaceVersion = new Version( encodedInterfaceVersion );
+    //--VERSION:-------------------#---vvvvvvvvv---vvvv-vv-vv--vv
+    //  ========                   #___~version~___YYYY_MM_DD__dd_
+    long encodedInterfaceVersion = 2___00002_001___2023_05_01__01L;             // <=> public static final
+    //-----------------------------#---^^^^^-^^^---^^^^-^^-^^--^^
+    Version stackInterfaceVersion = new Version( encodedInterfaceVersion );     // <=> public static final
+    /**
+     * The method {@link #getDecodedVersion()} delivers the code version as reground/readable String.
+     * @return version as decoded/readable String.
+     */
+    static public String getDecodedVersion(){ return stackInterfaceVersion.getDecodedVersion(); }
+    // Obiges (ab VERSION) dient nur der Versionierung
     
     
     

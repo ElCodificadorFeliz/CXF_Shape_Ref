@@ -8,7 +8,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import shape.Sphere;
 
+
+/**
+ * Die Klasse {@link SimplePermutationer} .. - see task
+ * 
+ * @param <T>  ...
+ * 
+ * 
+ * @author  Michael Schaefers  ([UTF-8]:"Michael Schäfers");
+ *          Px@Hamburg-UAS.eu
+ * @version {@value #encodedVersion}
+ */
 public class SimplePermutationer<T> implements Permutationer<T>,Serializable {
     //
     //--VERSION:-------------------------------#---vvvvvvvvv---vvvv-vv-vv--vv

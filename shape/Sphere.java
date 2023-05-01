@@ -3,16 +3,33 @@ package shape;
 
 
 import java.util.Objects;
+import stuffBeginnersDontHaveToUnderstand.Version;
 
 
 /**
- * Sphere - see task
+ * Die Klasse {@link Sphere} .. - see task
  * 
- * @author   Michael Schaefers  ([UTF-8]:"Michael Schäfers");
- *           P1@Hamburg-UAS.eu 
- * @version  2022/05/17 (#1)
+ * @author  Michael Schaefers  ([UTF-8]:"Michael Schäfers");
+ *          Px@Hamburg-UAS.eu
+ * @version {@value #encodedVersion}
  */
 public class Sphere implements Shape {
+    //
+    //--VERSION:-------------------------------#---vvvvvvvvv---vvvv-vv-vv--vv
+    //  ========                               #___~version~___YYYY_MM_DD__dd_
+    final static private long encodedVersion = 2___00002_002___2023_05_01__01L;
+    //-----------------------------------------#---^^^^^-^^^---^^^^-^^-^^--^^
+    final static private Version version = new Version( encodedVersion );
+    /**
+     * The method {@link #getDecodedVersion()} delivers the code version as reground/readable String.
+     * @return version as decoded/readable String.
+     */
+    static public String getDecodedVersion(){ return version.getDecodedVersion(); }
+    // Obiges (ab VERSION) dient nur der Versionierung
+    
+    
+    
+    
     
     private final Point center;
     private final double radius;

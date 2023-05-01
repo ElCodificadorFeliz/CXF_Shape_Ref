@@ -16,6 +16,9 @@ import java.util.List;
  * und threadsafe ist und in der Konsequenz auch &quot;langsam&quot;.<br />
  * Die Klasse {@link SimpleFastDequeStack} ist <strong>nicht threadsafe</strong>.
  * 
+ * @param <T>  ...
+ * 
+ * 
  * @author   Michael Schaefers  ([UTF-8]:"Michael Schäfers");
  *           P1@Hamburg-UAS.eu 
  * @version {@value #encodedVersion}
@@ -24,7 +27,7 @@ public class SimpleFastDequeStack<T> implements Stack<T>, Serializable {
     //
     //--VERSION:-------------------------------#---vvvvvvvvv---vvvv-vv-vv--vv
     //  ========                               #___~version~___YYYY_MM_DD__dd_
-    final static private long encodedVersion = 2___00001_002___2023_03_08__01L;
+    final static private long encodedVersion = 2___00001_003___2023_05_01__01L;
     //-----------------------------------------#---^^^^^-^^^---^^^^-^^-^^--^^
     final static private Version version = new Version( encodedVersion );
   //static public String getDecodedVersion(){ return version.getDecodedVersion(); }

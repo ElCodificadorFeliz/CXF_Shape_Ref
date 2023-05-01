@@ -2,14 +2,33 @@
 package shape;
 
 
+import stuffBeginnersDontHaveToUnderstand.Version;
+
+
 /**
- * Shape - see task
+ * Das Interface {@link Shape} .. - see task
  * 
- * @author   Michael Schaefers  ([UTF-8]:"Michael Schäfers");
- *           P1@Hamburg-UAS.eu 
- * @version  2022/05/17 (#1)
+ * @author  Michael Schaefers  ([UTF-8]:"Michael Schäfers");
+ *          Px@Hamburg-UAS.eu
+ * @version {@value #encodedInterfaceVersion}
  */
 public interface Shape {                                                        // <=> abstract
+    //
+    //--VERSION:-------------------#---vvvvvvvvv---vvvv-vv-vv--vv
+    //  ========                   #___~version~___YYYY_MM_DD__dd_
+    long encodedInterfaceVersion = 2___00002_002___2023_05_01__01L;             // <=> public static final
+    //-----------------------------#---^^^^^-^^^---^^^^-^^-^^--^^
+    Version shapeInterfaceVersion = new Version( encodedInterfaceVersion );     // <=> public static final
+    /**
+     * The method {@link #getDecodedVersion()} delivers the code version as reground/readable String.
+     * @return version as decoded/readable String.
+     */
+    static public String getDecodedVersion(){ return shapeInterfaceVersion.getDecodedVersion(); }
+    // Obiges (ab VERSION) dient nur der Versionierung
+    
+    
+    
+    
     
     /**
      * TODO ...
