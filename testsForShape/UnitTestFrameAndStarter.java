@@ -1,5 +1,5 @@
 // This source code is UTF-8 coded - see https://stackoverflow.com/questions/9180981/how-to-support-utf-8-encoding-in-eclipse
-package testOfShape;
+package testsForShape;
 
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static shape.Shape.epsilon;
 //
 import java.util.*;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
